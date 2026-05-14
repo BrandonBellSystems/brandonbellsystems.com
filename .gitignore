@@ -1,0 +1,14 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Local assets not for repo
+*.tmp
+*.temp
+
+# No build artifacts to ignore — this is the artifact
