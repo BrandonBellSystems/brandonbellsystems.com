@@ -10,9 +10,7 @@
 > 
 > The architecture is the proof.
 
-**[🌐 Live Site](https://brandonbellsystems.com)** ·
-**[📄 View Résumé](assets/resume.pdf)** ·
-**[🏗 Architecture Deep Dive](docs/architecture.md)**
+**[🌐 Live Site](https://brandonbellsystems.com/)** · **[🏗 Architecture Deep Dive](docs/architecture.md)**
 
 ---
 
