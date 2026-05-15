@@ -1,0 +1,2851 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <meta name="theme-color" content="#0a0c10">
+
+    <!-- Security Headers (NN-08) -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://gumroad.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self'; connect-src 'self' https://api.github.com; frame-src 'self' https://brandonbellsystems.gumroad.com; object-src 'none'; base-uri 'self'; form-action 'self' https://netlify.com; upgrade-insecure-requests;">
+    <title>Brandon Bell Systems — Production-Grade Software for Tools That Don't Exist Yet</title>
+    <meta name="description" content="Systems architect shipping production-grade, encrypted-by-default software. Specializing in sovereign single-file applications, CLI tools, and custom dashboards. 6 tools shipped. WCAG 2.1 AA. Open to full-time, freelance, and product opportunities.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Brandon Bell Systems — Production-Grade Software">
+    <meta property="og:description" content="I build production-grade software for people who need tools that don't exist yet.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://brandonbellsystems.com">
+    <meta property="og:site_name" content="Brandon Bell Systems">
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Brandon Bell",
+      "alternateName": "Brandon Bell Systems",
+      "description": "I build production-grade software for people who need tools that don't exist yet.",
+      "url": "https://brandonbellsystems.com",
+      "email": "bbell@brandonbellsystems.com",
+      "jobTitle": "Senior Customer Success Engineer & Systems Architect",
+      "knowsAbout": ["Software Architecture", "Web Security", "Accessibility", "AI Systems", "Customer Success"],
+      "sameAs": ["https://github.com/BrandonBellSystems", "https://www.linkedin.com/in/brandon-bell", "https://x.com/BrandonBSystems", "https://www.reddit.com/user/Brandon_Bell_Systems/", "https://news.ycombinator.com/user?id=Brandon_Bell", "https://github.com/BrandonBellSystems/brandonbellsystems.com"]
+    }
+    </script>
+
+    <!-- FOUC Prevention -->
+    <style>
+        html { visibility: hidden; }
+        html[data-theme], html.ready { visibility: visible; }
+/* ═══════════════════════════════════════════════════
+   BRANDON BELL SYSTEMS — 24-CATEGORY CSS ARCHITECTURE
+   Dark-first · Zero dependencies · System fonts only
+   ═══════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════
+   00 — AMBIENT ATMOSPHERE (Silicon Valley polish layer)
+   ═══════════════════════════════════════════════════ */
+.ambient-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: -1;
+    will-change: transform;
+}
+.orb-1 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(96,165,250,0.25), transparent 70%);
+    top: -10%; left: -5%;
+    animation: orbFloat 10s ease-in-out infinite alternate;
+}
+.orb-2 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(168,85,247,0.18), transparent 70%);
+    bottom: 10%; right: -5%;
+    animation: orbFloat 14s ease-in-out infinite alternate-reverse;
+}
+.orb-3 {
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(34,197,94,0.12), transparent 70%);
+    top: 40%; left: 45%;
+    animation: orbFloat 18s ease-in-out infinite alternate;
+}
+@media (max-width: 768px) {
+    .orb-1 { width: 300px; height: 300px; }
+    .orb-2 { width: 250px; height: 250px; }
+    .orb-3 { display: none; }
+}
+@keyframes orbFloat {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(30px, -30px) scale(1.08); }
+}
+
+.noise-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px 200px;
+}
+
+/* ─────────────────────────────────────────────
+   01 — DESIGN TOKEN SYSTEM
+   ───────────────────────────────────────────── */
+:root {
+    --bg:             #0a0c10;
+    --bg-elevated:    #0f1115;
+    --card:           #11141c;
+    --card-alt:       #141822;
+    --border:         rgba(255, 255, 255, 0.08);   /* From Audit 1 */
+    --border-soft:    rgba(255, 255, 255, 0.04);   /* From Audit 1 */
+    --border-bright:  rgba(255, 255, 255, 0.15);   /* From Audit 1 — NEW */
+    --fg:             #f1f4f9;                     /* From Audit 5 (higher clarity) */
+    --fg-dim:         #a3adc2;                     /* From Audit 5 */
+    --muted:          #6b7285;
+    --accent:         #60a5fa;
+    --accent-dim:     rgba(96,165,250,0.12);
+    --accent-glow:    rgba(96,165,250,0.3);        /* From Audit 2 — NEW */
+    --green:          #22c55e;
+    --green-dim:      rgba(34,197,94,0.12);
+    --purple:         #a855f7;
+    --purple-dim:     rgba(168,85,247,0.12);
+    --orange:         #f97316;
+    --orange-dim:     rgba(249,115,22,0.12);
+    --red:            #ef4444;
+    --yellow:         #eab308;
+
+    --space-1:  4px;   --space-2:  8px;   --space-3:  12px;
+    --space-4:  16px;  --space-5:  20px;  --space-6:  24px;
+    --space-8:  32px;  --space-10: 40px;  --space-12: 48px;
+    --space-16: 64px;  --space-20: 80px;  --space-24: 96px;
+
+    --radius-sm: 6px;    --radius-md: 10px;   --radius-lg: 14px;
+    --radius-xl: 20px;   --radius-pill: 999px;
+
+    /* Multi-layered diffused shadows (Audit 5 > Audit 2) */
+    --shadow-card:  0 1px 2px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.08);
+    --shadow-float: 0 4px 6px -1px rgba(0,0,0,0.2), 0 8px 16px -2px rgba(0,0,0,0.15), 0 24px 32px -4px rgba(0,0,0,0.2);
+    --shadow-hover: 0 12px 24px -6px rgba(0,0,0,0.3), 0 24px 48px -12px rgba(96,165,250,0.15);
+
+    /* Apple/Linear custom physics curves (Audit 5) */
+    --transition-fast:  0.15s cubic-bezier(0.32, 0.72, 0, 1);
+    --transition-base:  0.25s cubic-bezier(0.32, 0.72, 0, 1);
+    --transition-slow:  0.5s cubic-bezier(0.32, 0.72, 0, 1);
+    --transition-spring: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+}
+
+[data-theme="light"] {
+    --bg:             #f7f9fc;
+    --bg-elevated:    #ffffff;
+    --card:           #ffffff;
+    --card-alt:       #f9fbfe;
+    --border:         rgba(0, 0, 0, 0.08);
+    --border-soft:    rgba(0, 0, 0, 0.04);
+    --border-bright:  rgba(0, 0, 0, 0.12);        /* NEW — light theme needs its own bright border */
+    --fg:             #0a0c10;
+    --fg-dim:         #4b5563;
+    --muted:          #828d9f;
+    --accent:         #2563eb;
+    --accent-dim:     rgba(37,99,235,0.08);
+    --green:          #16a34a;
+    --green-dim:      rgba(22,163,74,0.08);
+    --purple:         #9333ea;
+    --purple-dim:     rgba(147,51,234,0.08);
+    --orange:         #ea580c;
+    --orange-dim:     rgba(234,88,12,0.08);
+    
+    --shadow-card:   0 1px 2px rgba(0,0,0,0.04), 0 2px 4px rgba(0,0,0,0.02), 0 4px 12px rgba(0,0,0,0.03);
+    --shadow-float:  0 4px 6px -1px rgba(0,0,0,0.05), 0 8px 16px -2px rgba(0,0,0,0.03), 0 24px 32px -4px rgba(0,0,0,0.04);
+    --shadow-hover:  0 12px 24px -6px rgba(0,0,0,0.06), 0 24px 48px -12px rgba(37,99,235,0.08);
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ─────────────────────────────────────────────
+   02 — CSS RESET + BASE STYLES
+   ───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+    background: var(--bg);
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-padding-top: 80px;
+}
+
+html, body {
+    overflow-x: hidden;
+    position: relative;
+    max-width: 100vw;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Inter, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.65;
+    color: var(--fg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+    letter-spacing: -0.01em;
+}
+
+img, svg { display: block; max-width: 100%; height: auto; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+ul, ol { list-style: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+input, textarea { font: inherit; color: inherit; }
+code, pre { font-family: ui-monospace, 'Cascadia Code', 'Fira Code', 'SF Mono', Menlo, Consolas, monospace; }
+
+::selection { background: var(--accent-dim); color: var(--fg); }
+
+html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+}
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: var(--radius-pill);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--fg-dim); }
+::-webkit-scrollbar-corner { background: transparent; }
+
+hr { border: none; border-top: 1px solid var(--border); }
+
+/* ─────────────────────────────────────────────
+   03 — ACCESSIBILITY UTILITIES
+   ───────────────────────────────────────────── */
+.sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+.skip-link {
+    position: fixed; top: -100%; left: var(--space-4); z-index: 10000;
+    background: var(--accent); color: #fff; padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm); font-weight: 600; font-size: 0.875rem;
+    text-decoration: none; transition: top var(--transition-fast);
+}
+.skip-link:focus { top: var(--space-4); }
+
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+@media (forced-colors: active) {
+    .rail-dot, .badge, .btn, .case-card, .principle-card, .router-card, .service-card {
+        border: 1px solid ButtonText;
+    }
+}
+
+/* ─────────────────────────────────────────────
+   04 — LAYOUT SYSTEM
+   ───────────────────────────────────────────── */
+.container {
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+    box-sizing: border-box;
+}
+@media (max-width: 768px) {
+    .container { padding: 0 var(--space-4); }
+}
+
+section {
+    padding: var(--space-24) 0;
+    position: relative;
+}
+@media (max-width: 768px) {
+    section { padding: var(--space-16) 0; }
+}
+
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: var(--space-3);
+}
+
+.section-title {
+    font-size: clamp(1.75rem, 3.8vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;        /* tightened from -0.025em */
+    line-height: 1.15;              /* tightened from 1.2 */
+    margin-bottom: var(--space-10);
+    color: var(--fg);
+    text-wrap: balance;             /* NEW */
+}
+@media (max-width: 768px) {
+    .section-title { margin-bottom: var(--space-8); }
+}
+
+/* ─────────────────────────────────────────────
+   05 — ANIMATION KEYFRAMES
+   ───────────────────────────────────────────── */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes shimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+@keyframes gradientFlow {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+@keyframes pulseGlow {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.6; transform: scale(1.08); }
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+@keyframes toastSlideIn {
+    from { opacity: 0; transform: translateY(16px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes toastProgress {
+    from { width: 100%; }
+    to   { width: 0%; }
+}
+
+/* Silicon Valley scroll reveal — cubic-bezier spring */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(40px) scale(0.985);
+    filter: blur(2px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform, filter;
+}
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+}
+
+/* Stagger delays — refined spacing */
+.animate-on-scroll[data-delay="0"]   { transition-delay: 0ms; }
+.animate-on-scroll[data-delay="80"]  { transition-delay: 100ms; }
+.animate-on-scroll[data-delay="160"] { transition-delay: 200ms; }
+.animate-on-scroll[data-delay="240"] { transition-delay: 300ms; }
+.animate-on-scroll[data-delay="320"] { transition-delay: 400ms; }
+.animate-on-scroll[data-delay="400"] { transition-delay: 500ms; }
+
+/* ─────────────────────────────────────────────
+   06 — TYPOGRAPHY SCALE
+   ───────────────────────────────────────────── */
+h1 { font-size: clamp(2.5rem, 5.5vw, 4rem); letter-spacing: -0.04em; line-height: 1.05; text-wrap: balance; }
+h2 { font-size: clamp(1.75rem, 3.8vw, 2.5rem); letter-spacing: -0.035em; text-wrap: balance; }
+h3 { font-size: 1.125rem; font-weight: 600; text-wrap: balance; }
+p  { max-width: 65ch; letter-spacing: -0.01em; text-wrap: pretty; }
+
+.gradient-text {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--purple) 50%, var(--green) 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientFlow 6s ease infinite;
+}
+
+/* ─────────────────────────────────────────────
+   07 — BUTTON SYSTEM (Tactile/Vercel Design)
+   ───────────────────────────────────────────── */
+.btn {
+    display: inline-flex; align-items: center; gap: var(--space-2);
+    font-weight: 500; font-size: 0.875rem; line-height: 1;
+    padding: var(--space-3) var(--space-5);
+    border-radius: var(--radius-sm);
+    transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);  /* From Audit 6 Patch 6 */
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: -0.01em;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform, box-shadow;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: scale(0.96); transition-duration: 0.1s; }
+.btn:disabled, .btn-disabled { opacity: 0.4; pointer-events: none; }
+
+.btn-sm  { padding: 6px 14px; font-size: 0.8125rem; }
+.btn-lg  { padding: 14px 28px; font-size: 0.9375rem; }
+
+/* The Apple/Vercel Button Top-Rim Highlight Trick + Audit 6 glow */
+.btn-primary { 
+    background: var(--accent); 
+    color: #fff; 
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 1px 2px rgba(0,0,0,0.1), 0 0 0 0px rgba(96,165,250,0);
+    text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+.btn-primary:hover { 
+    filter: brightness(1.08); 
+    text-decoration: none; 
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 4px 8px rgba(96,165,250,0.25), 0 0 0 1px rgba(96,165,250,0.4), 0 8px 24px -4px rgba(96,165,250,0.45); 
+}
+
+.btn-accent { 
+    background: var(--purple); 
+    color: #fff; 
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 1px 2px rgba(0,0,0,0.1), 0 0 0 0px rgba(168,85,247,0);
+}
+.btn-accent:hover { 
+    filter: brightness(1.08); 
+    text-decoration: none; 
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 4px 8px rgba(168,85,247,0.25), 0 0 0 1px rgba(168,85,247,0.4), 0 8px 24px -4px rgba(168,85,247,0.45); 
+}
+
+.btn-green { 
+    background: var(--green); 
+    color: #fff; 
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 1px 2px rgba(0,0,0,0.1), 0 0 0 0px rgba(34,197,94,0);
+}
+.btn-green:hover { 
+    filter: brightness(1.08); 
+    text-decoration: none; 
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 4px 8px rgba(34,197,94,0.25), 0 0 0 1px rgba(34,197,94,0.4), 0 8px 24px -4px rgba(34,197,94,0.45); 
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--fg);
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+.btn-ghost:hover { 
+    background: var(--card-alt); 
+    border-color: rgba(255,255,255,0.15);
+    color: var(--fg); 
+    text-decoration: none; 
+}
+[data-theme="light"] .btn-ghost:hover { border-color: rgba(0,0,0,0.15); }
+
+.btn-disabled { cursor: not-allowed; }
+
+/* ─────────────────────────────────────────────
+   08 — BADGE HIERARCHY
+   ───────────────────────────────────────────── */
+.badge {
+    display: inline-flex; align-items: center; gap: var(--space-1);
+    font-size: 0.6875rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.05em; padding: 3px 8px; border-radius: var(--radius-pill);
+    white-space: nowrap;
+}
+
+.badge-shipped      { background: var(--green-dim);  color: var(--green); }
+.badge-pro          { background: var(--purple-dim); color: var(--purple); }
+.badge-oss          { background: var(--accent-dim); color: var(--accent); }
+.badge-available    { background: var(--orange-dim); color: var(--orange); }
+.badge-coming-soon  { background: var(--border);     color: var(--muted); }
+.badge-flagship     { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+
+.badge-dot-pulse {
+    display: inline-block; width: 7px; height: 7px;
+    border-radius: 50%; background: var(--orange);
+    animation: pulseGlow 2s ease-in-out infinite;
+}
+
+/* ─────────────────────────────────────────────
+   09 — STICKY NAVIGATION
+   ───────────────────────────────────────────── */
+.site-header {
+    position: sticky; top: 0; z-index: 900;
+    background: rgba(10,12,16,0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid transparent;
+    transition: all var(--transition-base);
+}
+.site-header.scrolled { 
+    border-bottom-color: var(--border); 
+    background: rgba(10,12,16,0.9);
+}
+[data-theme="light"] .site-header { 
+    background: rgba(244,246,249,0.7); 
+}
+[data-theme="light"] .site-header.scrolled { 
+    background: rgba(244,246,249,0.9); 
+}
+
+.header-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 1120px; margin: 0 auto;
+    padding: var(--space-3) var(--space-6);
+    height: 56px;
+}
+@media (max-width: 768px) {
+    .header-inner { padding: var(--space-3) var(--space-4); }
+}
+
+.logo {
+    display: flex; align-items: center; gap: 2px;
+    font-family: ui-monospace, 'Cascadia Code', 'Fira Code', 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 0.875rem; font-weight: 600; color: var(--fg);
+    text-decoration: none; letter-spacing: -0.01em;
+}
+.logo:hover { text-decoration: none; }
+.logo-bracket { color: var(--muted); }
+.logo-dot { color: var(--accent); margin: 0 1px; }
+
+.header-nav-list { display: flex; gap: var(--space-1); }
+.header-nav-link {
+    font-size: 0.8125rem; font-weight: 500; color: var(--fg-dim);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    transition: color var(--transition-fast), background var(--transition-fast);
+    text-decoration: none;
+}
+.header-nav-link:hover { color: var(--fg); background: var(--card); }
+
+.header-actions { display: flex; align-items: center; gap: var(--space-3); }
+
+.theme-toggle {
+    width: 36px; height: 36px; border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--fg-dim); transition: all var(--transition-fast);
+}
+.theme-toggle:hover { background: var(--card); color: var(--fg); }
+
+[data-theme="dark"]  .icon-sun  { display: block; }
+[data-theme="dark"]  .icon-moon { display: none; }
+[data-theme="light"] .icon-sun  { display: none; }
+[data-theme="light"] .icon-moon { display: block; }
+
+/* Hamburger */
+.mobile-menu-btn {
+    display: none; width: 36px; height: 36px; flex-direction: column;
+    align-items: center; justify-content: center; gap: 4px;
+    border-radius: var(--radius-sm);
+}
+.mobile-menu-btn:hover { background: var(--card); }
+.hamburger-line {
+    width: 18px; height: 2px; background: var(--fg);
+    border-radius: 1px; transition: transform var(--transition-fast), opacity var(--transition-fast);
+}
+.mobile-menu-btn[aria-expanded="true"] .hamburger-line:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.mobile-menu-btn[aria-expanded="true"] .hamburger-line:nth-child(2) { opacity: 0; }
+.mobile-menu-btn[aria-expanded="true"] .hamburger-line:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+@media (max-width: 768px) {
+
+    .header-nav {
+        position: fixed; top: 56px; left: 0; width: 100%; height: calc(100vh - 56px);
+        background: var(--bg); padding: var(--space-6);
+        transform: translateX(100%); visibility: hidden;
+        transition: transform var(--transition-base), visibility var(--transition-base);
+        z-index: 899;
+    }
+    .header-nav.mobile-open { transform: translateX(0); visibility: visible; }
+    .header-nav-list {
+        flex-direction: column; gap: var(--space-2);
+    }
+    .header-nav-link {
+        font-size: 1.125rem; padding: var(--space-4) var(--space-4);
+        color: var(--fg); font-weight: 500;
+        display: block; width: 100%;
+    }
+    .mobile-menu-btn { display: flex; }
+    .header-actions .btn { display: none; }
+}
+
+/* ─────────────────────────────────────────────
+   10 — FLOATING RAIL NAVIGATION
+   ───────────────────────────────────────────── */
+.rail-nav {
+    position: fixed; right: var(--space-4); top: 50%; transform: translateY(-50%);
+    z-index: 800;
+}
+@media (max-width: 1024px) {
+    .rail-nav { right: var(--space-2); }
+}
+@media (max-width: 768px) {
+    .rail-nav { display: none; }
+}
+
+.rail-list { display: flex; flex-direction: column; gap: 4px; }
+.rail-link {
+    display: flex; align-items: center; gap: var(--space-3);
+    padding: 6px var(--space-2) 6px var(--space-3);
+    border-radius: var(--radius-pill);
+    text-decoration: none; transition: all var(--transition-fast);
+    flex-direction: row-reverse;
+}
+.rail-link:hover { text-decoration: none; }
+
+.rail-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--border); transition: all var(--transition-base);
+    flex-shrink: 0;
+}
+.rail-link.active .rail-dot { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+.rail-link:hover .rail-dot { background: var(--fg-dim); }
+
+.rail-label {
+    font-size: 0.6875rem; font-weight: 500; color: var(--muted);
+    opacity: 0; transition: opacity var(--transition-fast);
+    white-space: nowrap;
+}
+.rail-link:hover .rail-label, .rail-link.active .rail-label { opacity: 1; color: var(--fg-dim); }
+.rail-link.active .rail-label { color: var(--accent); }
+
+/* ─────────────────────────────────────────────
+   11 — HERO SYSTEM
+   ───────────────────────────────────────────── */
+.hero-section {
+    position: relative;
+    padding-top: var(--space-20);
+    padding-bottom: var(--space-16);
+    text-align: center;
+    overflow: hidden;
+}
+.hero-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 0;
+}
+.hero-section > .container {
+    position: relative;
+    z-index: 1;
+}
+@media (max-width: 768px) {
+    .hero-section { padding-top: var(--space-12); }
+}
+
+.hero-badge { margin-bottom: var(--space-6); }
+
+.hero-title {
+    margin-bottom: var(--space-5);
+    letter-spacing: -0.04em;
+}
+
+.hero-sub {
+    font-size: 1.125rem; color: var(--fg-dim);
+    margin: 0 auto var(--space-10);
+    max-width: 600px;
+}
+
+/* Audience Router */
+.audience-router {
+    display: flex; gap: var(--space-3);
+    justify-content: center; flex-wrap: wrap;
+    margin-bottom: var(--space-10);
+}
+
+.router-card {
+    display: flex; align-items: center; gap: var(--space-4);
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: var(--space-4) var(--space-5);
+    min-width: 240px; text-align: left;
+    transition: transform 0.15s ease-out, box-shadow var(--transition-base), border-color var(--transition-base);
+    cursor: pointer; color: var(--fg);
+    --rotate-x: 0deg; --rotate-y: 0deg;
+    transform-style: preserve-3d;
+}
+.router-card:hover {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-hover);
+    transform: perspective(1000px) translateY(-4px) rotateX(var(--rotate-x)) rotateY(var(--rotate-y));
+}
+
+.router-title { 
+    display: block; font-weight: 600; font-size: 0.9375rem; margin-bottom: 2px; 
+    letter-spacing: -0.01em; 
+}
+.router-desc { 
+    display: block; font-size: 0.8125rem; color: var(--muted); 
+    font-weight: 500;
+}
+.router-arrow { 
+    color: var(--muted); 
+    flex-shrink: 0; 
+    transition: transform var(--transition-fast), color var(--transition-fast); 
+    transform: translateX(0); 
+}
+.router-icon { font-size: 1.5rem; flex-shrink: 0; }
+.router-content { flex: 1; }
+.router-card:hover .router-arrow { 
+    transform: translateX(4px); 
+    color: var(--fg); 
+}
+
+/* Trust Strip */
+.trust-strip {
+    display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap; gap: var(--space-3);
+    margin-bottom: var(--space-12);
+}
+.trust-item {
+    font-size: 0.8125rem; font-weight: 500; color: var(--fg-dim);
+    display: inline-flex; align-items: center; gap: 2px;
+}
+.trust-sep {
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--border); flex-shrink: 0;
+}
+@media (max-width: 640px) {
+    .trust-strip { gap: var(--space-2) var(--space-4); }
+    .trust-sep { display: none; }
+}
+
+/* Hero Preview Window (Hyper-Polished IDE feel) */
+.hero-preview { 
+    max-width: 700px; 
+    margin: 0 auto; 
+    perspective: 1000px;
+}
+.preview-window {
+    background: #0d1117;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg); 
+    overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.05), var(--shadow-float);
+    text-align: left;
+}
+[data-theme="light"] .preview-window { background: #ffffff; }
+
+.preview-chrome {
+    display: flex; align-items: center; gap: 8px;
+    padding: 14px var(--space-4);
+    background: #161b22;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+[data-theme="light"] .preview-chrome { background: #f6f8fa; border-bottom: 1px solid var(--border); }
+
+.chrome-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.chrome-dot-red    { background: #ff5f56; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1); }
+.chrome-dot-yellow { background: #ffbd2e; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1); }
+.chrome-dot-green  { background: #27c93f; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1); }
+.chrome-title { 
+    font-size: 0.75rem; 
+    color: #8b949e; 
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    margin: 0 auto;
+    transform: translateX(-24px);
+}
+
+.preview-body { padding: var(--space-5) var(--space-6); overflow-x: auto; }
+.preview-code { 
+    font-size: 0.875rem; 
+    line-height: 1.7; 
+    display: block; 
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+}
+.code-comment { color: #8b949e; font-style: italic; }
+.code-keyword { color: #ff7b72; }
+.code-var     { color: #79c0ff; }
+.code-string  { color: #a5d6ff; }
+.code-prop    { color: #d2a8ff; }
+[data-theme="light"] .code-keyword { color: #d73a49; }
+[data-theme="light"] .code-var     { color: #005cc5; }
+[data-theme="light"] .code-string  { color: #032f62; }
+[data-theme="light"] .code-prop    { color: #6f42c1; }
+
+/* ─────────────────────────────────────────────
+   12 — ABOUT SECTION
+   ───────────────────────────────────────────── */
+.about-section { background: var(--bg-elevated); }
+.about-grid {
+    display: grid; grid-template-columns: 1fr 220px;
+    gap: var(--space-10); align-items: start;
+}
+@media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; gap: var(--space-8); }
+}
+
+.about-text p { margin-bottom: var(--space-4); color: var(--fg-dim); }
+.about-text p:last-child { margin-bottom: 0; }
+
+.about-photo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.about-photo-img {
+    border-radius: var(--radius-lg);
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+    box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent-dim), 0 12px 40px rgba(0,0,0,0.25);
+    transition: box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.about-photo:hover .about-photo-img {
+    box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent), 0 16px 48px rgba(0,0,0,0.35);
+}
+
+.about-badges { margin-top: var(--space-3); text-align: center; }
+
+/* ─────────────────────────────────────────────
+   13 — CASE STUDY CARDS
+   ───────────────────────────────────────────── */
+.case-studies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: var(--space-5);
+}
+@media (max-width: 480px) {
+    .case-studies-grid { grid-template-columns: 1fr; }
+}
+
+/* ─────────────────────────────────────────────
+   STRUCTURAL WRAPPER STRETCH
+   Separates scroll-reveal animation from card hover physics
+   ═══════════════════════════════════════════════════ */
+.case-studies-grid > .animate-on-scroll,
+.principles-grid > .animate-on-scroll {
+    display: flex;
+    flex-direction: column;
+}
+
+.case-studies-grid > .animate-on-scroll > .case-card,
+.principles-grid > .animate-on-scroll > .principle-card {
+    flex: 1;
+}
+
+/* Linear/Vercel spatial hover effect — combines background bloom with border outline */
+.case-card {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-top: 1px solid var(--border-bright);
+    border-left: 1px solid var(--border-bright);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    --mouse-x: 50%; --mouse-y: 50%;
+    --rotate-x: 0deg;
+    --rotate-y: 0deg;
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease-out, box-shadow var(--transition-base), border-color var(--transition-base);
+}
+.case-card:hover {
+    transform: perspective(1000px) translateY(-4px) rotateX(var(--rotate-x)) rotateY(var(--rotate-y));
+    border-color: var(--border-bright);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px var(--accent-dim);
+}
+
+.case-card-glow {
+    position: absolute; inset: 0; pointer-events: none; z-index: 0;
+    background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(96,165,250,0.06) 0%, transparent 50%);
+    opacity: 0; transition: opacity var(--transition-base);
+}
+.case-card::after {
+    content: ""; position: absolute; inset: 0; border-radius: var(--radius-lg);
+    padding: 1px; pointer-events: none; z-index: 2;
+    background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.4), transparent 40%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0; transition: opacity var(--transition-base);
+}
+.case-card:hover .case-card-glow, .case-card:hover::after { opacity: 1; }
+
+.case-card-inner { 
+    position: relative; 
+    z-index: 1; 
+    padding: var(--space-6); 
+}
+
+.case-card-pro {
+    border: 1px solid transparent;
+    background: var(--card);
+}
+.case-card-pro::before {
+    content: ''; position: absolute; inset: -1px; z-index: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, var(--accent), var(--purple), var(--green), var(--accent));
+    background-size: 300% 300%;
+    animation: gradientFlow 4s ease infinite;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+.case-badges { display: flex; flex-wrap: wrap; gap: var(--space-1); margin-bottom: var(--space-4); }
+.case-title { margin-bottom: 2px; }
+.case-subtitle { font-size: 0.875rem; color: var(--fg-dim); margin-bottom: var(--space-4); }
+
+.case-detail { margin-bottom: var(--space-4); }
+.case-detail p { font-size: 0.875rem; color: var(--fg-dim); margin-bottom: var(--space-3); line-height: 1.5; }
+.case-detail p:last-child { margin-bottom: 0; }
+.case-detail strong { color: var(--fg); }
+
+.case-meta {
+    display: flex; flex-wrap: wrap; gap: var(--space-3);
+    padding: var(--space-3) 0; border-top: 1px solid var(--border-soft);
+    margin-bottom: var(--space-4);
+}
+.case-stat { font-size: 0.75rem; color: var(--muted); font-weight: 500; }
+
+.case-links { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+
+/* ─────────────────────────────────────────────
+   14 — SERVICES MATRIX
+   ───────────────────────────────────────────── */
+.services-section { background: var(--bg-elevated); }
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-5);
+    margin-bottom: var(--space-10);
+}
+
+/* Prevent 4th-card orphan: at 1120px container, auto-fit minmax(300px)
+   mathematically caps at 3 columns, stranding the last card on every desktop. */
+@media (min-width: 769px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.service-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: var(--space-6);
+    transition: transform 0.15s ease-out, box-shadow var(--transition-base), border-color var(--transition-base);
+    --rotate-x: 0deg; --rotate-y: 0deg;
+    transform-style: preserve-3d;
+}
+.service-card:hover {
+    border-color: var(--purple);
+    box-shadow: var(--shadow-hover);
+    transform: perspective(1000px) translateY(-4px) rotateX(var(--rotate-x)) rotateY(var(--rotate-y));
+}
+
+.service-icon { font-size: 2rem; margin-bottom: var(--space-4); }
+.service-title { margin-bottom: var(--space-3); }
+.service-desc { font-size: 0.875rem; color: var(--fg-dim); margin-bottom: var(--space-4); line-height: 1.5; }
+
+.service-evidence { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.evidence-badge {
+    font-size: 0.6875rem; font-weight: 500; color: var(--green);
+    background: var(--green-dim); padding: 2px 8px; border-radius: var(--radius-pill);
+}
+
+.services-cta { text-align: center; }
+
+/* ─────────────────────────────────────────────
+   15 — PHILOSOPHY SPEC CARDS
+   ───────────────────────────────────────────── */
+.principles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-5);
+}
+
+.principle-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: var(--space-6);
+    transition: transform 0.15s ease-out, box-shadow var(--transition-base), border-color var(--transition-base);
+    --rotate-x: 0deg; --rotate-y: 0deg;
+    transform-style: preserve-3d;
+}
+.principle-card:hover {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-hover);
+    transform: perspective(1000px) translateY(-4px) rotateX(var(--rotate-x)) rotateY(var(--rotate-y));
+}
+
+.principle-icon { font-size: 2rem; margin-bottom: var(--space-4); }
+.principle-title { margin-bottom: var(--space-3); }
+.principle-def { font-size: 0.9375rem; color: var(--fg-dim); margin-bottom: var(--space-4); line-height: 1.5; }
+.principle-proof { font-size: 0.8125rem; color: var(--muted); line-height: 1.4; }
+.principle-proof strong { color: var(--accent); }
+
+/* ─────────────────────────────────────────────
+   16 — FOR EMPLOYERS SECTION
+   ───────────────────────────────────────────── */
+.employers-section { background: var(--bg-elevated); }
+
+.employers-grid {
+    display: grid; grid-template-columns: 1fr 300px;
+    gap: var(--space-10); align-items: start;
+}
+@media (max-width: 768px) {
+    .employers-grid { grid-template-columns: 1fr; gap: var(--space-8); }
+}
+
+.employers-list { display: flex; flex-direction: column; gap: var(--space-4); }
+.employer-bullet {
+    display: flex; gap: var(--space-3); align-items: flex-start;
+    font-size: 0.9375rem; line-height: 1.5;
+    color: var(--fg-dim);
+}
+.employer-bullet strong { color: var(--fg); }
+.bullet-icon {
+    color: var(--green); font-weight: 700; flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.employers-ctas { display: flex; flex-direction: column; gap: var(--space-3); }
+.employers-ctas .btn { justify-content: center; text-align: center; }
+
+/* ─────────────────────────────────────────────
+   17 — CSI PRO SPOTLIGHT SECTION
+   ───────────────────────────────────────────── */
+.csipro-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius-xl); padding: var(--space-10);
+    text-align: center;
+}
+@media (max-width: 768px) {
+    .csipro-card { padding: var(--space-6); }
+}
+
+.csipro-highlights {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: var(--space-6); margin-bottom: var(--space-8);
+}
+.csipro-highlight { text-align: center; }
+.highlight-label {
+    display: block; font-size: 0.75rem; font-weight: 500;
+    color: var(--muted); text-transform: uppercase;
+    letter-spacing: 0.05em; margin-bottom: var(--space-1);
+}
+.highlight-value {
+    display: block; font-size: 1.25rem; font-weight: 700;
+    color: var(--fg);
+}
+
+.csipro-trust {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: var(--space-4); margin-bottom: var(--space-8);
+    font-size: 0.8125rem; font-weight: 500; color: var(--fg-dim);
+}
+
+.csipro-ctas { display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap; }
+
+/* ─────────────────────────────────────────────
+   18 — FAQ ACCORDION
+   ───────────────────────────────────────────── */
+.faq-category { margin-bottom: var(--space-10); }
+.faq-category:last-child { margin-bottom: 0; }
+
+.faq-cat-title {
+    font-size: 1rem; font-weight: 600; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 0.05em;
+    margin-bottom: var(--space-5);
+}
+
+.faq-accordion { display: flex; flex-direction: column; gap: var(--space-2); }
+
+.faq-item {
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--card);
+    transition: border-color var(--transition-fast);
+}
+.faq-item:focus-within { border-color: var(--accent); }
+
+.faq-trigger {
+    width: 100%; display: flex; align-items: center; justify-content: space-between;
+    padding: var(--space-4) var(--space-5); font-size: 0.9375rem;
+    font-weight: 500; color: var(--fg); text-align: left;
+    transition: background var(--transition-fast);
+    gap: var(--space-4);
+}
+.faq-trigger:hover { background: var(--card-alt); }
+.faq-trigger[aria-expanded="true"] { color: var(--accent); }
+
+.faq-chevron {
+    flex-shrink: 0; transition: transform var(--transition-base);
+    color: var(--muted);
+}
+.faq-trigger[aria-expanded="true"] .faq-chevron { transform: rotate(180deg); color: var(--accent); }
+
+.faq-panel {
+    padding: 0 var(--space-5) var(--space-5);
+    font-size: 0.875rem; color: var(--fg-dim); line-height: 1.6;
+    animation: fadeInUp 0.3s ease;
+}
+.faq-panel[hidden] { display: none; }
+.faq-panel a { color: var(--accent); }
+
+/* ─────────────────────────────────────────────
+   19 — RESEARCH PLACEHOLDER
+   ───────────────────────────────────────────── */
+.research-section { background: var(--bg-elevated); }
+
+.research-card-muted {
+    background: var(--card); border: 1px dashed var(--border);
+    border-radius: var(--radius-lg); padding: var(--space-10);
+    text-align: center;
+}
+.research-note { color: var(--fg-dim); margin: 0 auto var(--space-6); max-width: 550px; }
+
+.research-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-2); margin-bottom: var(--space-6); }
+.research-tag {
+    font-size: 0.75rem; color: var(--muted);
+    background: var(--card-alt); border: 1px solid var(--border-soft);
+    padding: 4px 10px; border-radius: var(--radius-pill);
+}
+
+/* ─────────────────────────────────────────────
+   20 — CONVERSION CTA BAND
+   ───────────────────────────────────────────── */
+.cta-band-section { background: var(--bg-elevated); }
+
+.cta-band {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius-xl); padding: var(--space-12) var(--space-10);
+    text-align: center;
+}
+@media (max-width: 768px) {
+    .cta-band { padding: var(--space-8) var(--space-6); }
+}
+
+.cta-band-title { font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: var(--space-3); }
+.cta-band-sub { color: var(--fg-dim); margin-bottom: var(--space-10); }
+
+.cta-band-cards {
+    display: flex; gap: var(--space-5); justify-content: center;
+    flex-wrap: wrap;
+}
+.cta-path {
+    background: var(--card-alt); border: 1px solid var(--border-soft);
+    border-radius: var(--radius-lg); padding: var(--space-6);
+    min-width: 240px; flex: 1; max-width: 300px;
+    transition: all var(--transition-base);
+}
+.cta-path:hover { border-color: var(--accent); }
+.cta-path-icon { font-size: 1.75rem; margin-bottom: var(--space-4); }
+.cta-path h3 { margin-bottom: var(--space-2); }
+.cta-path p { font-size: 0.875rem; color: var(--fg-dim); margin-bottom: var(--space-5); }
+
+/* ─────────────────────────────────────────────
+   21 — FOOTER
+   ───────────────────────────────────────────── */
+.site-footer {
+    background: var(--bg); border-top: 1px solid var(--border);
+    padding: var(--space-16) 0 var(--space-8);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: var(--space-10);
+    margin-bottom: var(--space-12);
+}
+@media (max-width: 768px) {
+    .footer-grid { grid-template-columns: 1fr; gap: var(--space-8); }
+}
+
+.footer-logo {
+    font-family: ui-monospace, 'Cascadia Code', 'Fira Code', 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 0.9375rem; font-weight: 700; color: var(--fg);
+    display: block; margin-bottom: var(--space-3);
+}
+.footer-tagline { font-size: 0.8125rem; color: var(--fg-dim); margin-bottom: var(--space-4); }
+.footer-badges { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+
+.footer-heading {
+    font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--muted); margin-bottom: var(--space-4);
+}
+.footer-nav { display: flex; flex-direction: column; gap: var(--space-2); }
+.footer-nav a {
+    font-size: 0.875rem; color: var(--fg-dim); transition: color var(--transition-fast);
+}
+.footer-nav a:hover { color: var(--fg); text-decoration: none; }
+
+.footer-bottom {
+    border-top: 1px solid var(--border-soft);
+    padding-top: var(--space-6);
+    display: flex; justify-content: space-between; flex-wrap: wrap;
+    gap: var(--space-3);
+}
+.footer-copy, .footer-built { font-size: 0.75rem; color: var(--muted); }
+
+/* ─────────────────────────────────────────────
+   22 — UTILITY SHELL
+   ───────────────────────────────────────────── */
+
+/* Skip Link — styled in category 03 */
+
+/* Offline Indicator */
+.offline-indicator {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+    background: var(--yellow); color: #0a0c10;
+    text-align: center; padding: var(--space-2); font-size: 0.8125rem;
+    font-weight: 500; display: flex; align-items: center; justify-content: center;
+    gap: var(--space-2); transition: transform var(--transition-base);
+    transform: translateY(-100%);
+}
+.offline-indicator:not([aria-hidden="true"]) { transform: translateY(0); }
+.offline-dot { width: 6px; height: 6px; border-radius: 50%; background: #0a0c10; }
+
+/* Back to Top */
+.back-to-top {
+    position: fixed; bottom: var(--space-6); right: var(--space-6);
+    z-index: 700; width: 44px; height: 44px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius-md); display: flex; align-items: center;
+    justify-content: center; color: var(--fg-dim);
+    box-shadow: var(--shadow-card); opacity: 0; pointer-events: none;
+    transform: translateY(12px);
+    transition: all var(--transition-base);
+}
+.back-to-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.back-to-top:hover { background: var(--card-alt); color: var(--fg); border-color: var(--accent); }
+
+/* Toast Container */
+.toast-container {
+    position: fixed; bottom: var(--space-6); left: 50%; transform: translateX(-50%);
+    z-index: 9998; display: flex; flex-direction: column; gap: var(--space-3);
+    align-items: center; pointer-events: none;
+}
+
+.toast {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius-md); padding: var(--space-3) var(--space-5);
+    font-size: 0.875rem; font-weight: 500; color: var(--fg);
+    box-shadow: var(--shadow-float); position: relative;
+    overflow: hidden; opacity: 0; transform: translateY(16px) scale(0.96);
+    pointer-events: auto; max-width: 420px;
+}
+.toast-visible { animation: toastSlideIn 0.3s ease forwards; }
+.toast-success { border-left: 3px solid var(--green); }
+.toast-error   { border-left: 3px solid var(--red); }
+.toast-info    { border-left: 3px solid var(--accent); }
+.toast-warning { border-left: 3px solid var(--yellow); }
+
+.toast-progress {
+    position: absolute; bottom: 0; left: 0; height: 2px;
+    background: var(--accent);
+    animation: toastProgress 4s linear forwards;
+}
+.toast-success .toast-progress { background: var(--green); }
+.toast-error .toast-progress   { background: var(--red); }
+
+/* ─────────────────────────────────────────────
+   23 — PRINT STYLES
+   ───────────────────────────────────────────── */
+
+@media print {
+    body { background: #fff !important; color: #000 !important; font-size: 12pt; }
+    .site-header, .rail-nav, .back-to-top, .toast-container,
+    .offline-indicator, .skip-link, .modal-overlay, .header-actions,
+    .mobile-menu-btn, .hero-preview, .audience-router, .cta-band-section,
+    #contact-modal { display: none !important; }
+    section { padding: 1em 0; break-inside: avoid; }
+    .container { max-width: none; padding: 0; }
+    .gradient-text { -webkit-text-fill-color: #000 !important; color: #000 !important; }
+    a { color: #000; text-decoration: underline; }
+    a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.8em; }
+    .case-card, .principle-card, .service-card, .router-card, .csipro-card {
+        border: 1px solid #ccc !important; box-shadow: none !important; break-inside: avoid;
+    }
+    .badge { border: 1px solid #999 !important; }
+    iframe, .preview-window { display: none !important; }
+}
+
+/* ─────────────────────────────────────────────
+   24 — SECURITY + POLISH
+   ───────────────────────────────────────────── */
+
+/* Safe area insets for notched devices */
+body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+}
+
+/* Hidden honeypot field */
+.hidden-field {
+    position: absolute; left: -9999px; opacity: 0; height: 0; overflow: hidden;
+}
+
+/* ═════════════════════════════════════════════
+   CONTACT MODAL
+   ═════════════════════════════════════════════ */
+.modal-overlay {
+    position: fixed; inset: 0; z-index: 9500;
+    display: flex; align-items: center; justify-content: center;
+    padding: var(--space-4); opacity: 0; pointer-events: none;
+    transition: opacity var(--transition-base);
+}
+.modal-overlay.modal-open { opacity: 1; pointer-events: auto; }
+
+.modal-backdrop {
+    position: absolute; inset: 0;
+    background: rgba(10,12,16,0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+[data-theme="light"] .modal-backdrop { background: rgba(0,0,0,0.3); }
+
+.modal-container {
+    position: relative; z-index: 1; width: 100%; max-width: 520px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius-xl); box-shadow: var(--shadow-float);
+    transform: translateY(16px) scale(0.97);
+    transition: transform var(--transition-spring);
+}
+.modal-open .modal-container { transform: translateY(0) scale(1); }
+
+.modal-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: var(--space-5) var(--space-6);
+    border-bottom: 1px solid var(--border-soft);
+}
+.modal-title { font-size: 1.125rem; font-weight: 700; }
+.modal-close {
+    width: 36px; height: 36px; border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); transition: all var(--transition-fast);
+}
+.modal-close:hover { background: var(--card-alt); color: var(--fg); }
+
+.modal-body { padding: var(--space-6); }
+
+/* Contact Form */
+.contact-form { display: flex; flex-direction: column; gap: var(--space-5); }
+.form-group { display: flex; flex-direction: column; gap: var(--space-2); }
+.form-group label {
+    font-size: 0.8125rem; font-weight: 600; color: var(--fg-dim);
+}
+.form-group input, .form-group textarea {
+    padding: var(--space-3) var(--space-4);
+    background: var(--card-alt); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); color: var(--fg);
+    transition: border-color var(--transition-fast);
+}
+.form-group input:focus, .form-group textarea:focus {
+    outline: none; border-color: var(--accent);
+}
+.form-group input::placeholder, .form-group textarea::placeholder {
+    color: var(--muted);
+}
+
+.form-submit-btn { width: 100%; justify-content: center; position: relative; }
+.submit-loader {
+    position: absolute; width: 16px; height: 16px; border: 2px solid transparent;
+    border-top-color: #fff; border-radius: 50%; display: none;
+}
+.submit-loader.active { display: block; animation: spin 0.6s linear infinite; }
+
+/* ═════════════════════════════════════════════
+   RESPONSIVE FINE-TUNING
+   ═════════════════════════════════════════════ */
+@media (max-width: 640px) {
+    .audience-router { flex-direction: column; align-items: stretch; }
+    .router-card { min-width: unset; }
+    .cta-band-cards { flex-direction: column; align-items: stretch; }
+    .cta-path { max-width: none; }
+    .csipro-highlights { gap: var(--space-4); }
+    .preview-body { padding: var(--space-4); }
+    .preview-code { font-size: 0.6875rem; }
+    .employers-ctas .btn { width: 100%; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+}
+/* ─────────────────────────────────────────────
+   14b — SERVICES TIERED LAYOUT (Edit 2)
+   ───────────────────────────────────────────── */
+.services-intro { text-align: center; margin-bottom: var(--space-12); }
+.services-lede { font-size: 1.0625rem; color: var(--fg-dim); max-width: 650px; margin: 0 auto var(--space-4); line-height: 1.7; }
+.services-lede-close { font-size: 1.125rem; color: var(--fg); }
+
+.services-tier { margin-bottom: var(--space-12); }
+.services-tier-label {
+    font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--accent);
+    margin-bottom: var(--space-4);
+}
+
+.service-card-flagship {
+    border-color: var(--purple);
+    background: linear-gradient(135deg, var(--card), var(--purple-dim));
+}
+
+.services-process { display: flex; flex-direction: column; gap: var(--space-4); }
+.process-step {
+    display: flex; gap: var(--space-4); align-items: flex-start;
+    padding: var(--space-4); background: var(--card);
+    border: 1px solid var(--border-soft); border-radius: var(--radius-md);
+    font-size: 0.9375rem; color: var(--fg-dim); line-height: 1.5;
+}
+.process-step strong { color: var(--fg); }
+.process-num {
+    font-size: 1.25rem; font-weight: 700; color: var(--accent);
+    flex-shrink: 0; width: 28px; text-align: center;
+}
+.service-card-flagship {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: var(--space-8);
+    align-items: center;
+}
+
+.flagship-content {
+    /* no extra styles needed — inherits card padding */
+}
+
+.flagship-specs {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding-left: var(--space-6);
+    border-left: 1px solid var(--border-bright);
+}
+
+.spec-item {
+    font-size: 0.9375rem;
+    color: var(--fg-dim);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    line-height: 1.5;
+}
+
+.spec-check {
+    color: var(--green);
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .service-card-flagship {
+        grid-template-columns: 1fr;
+    }
+    .flagship-specs {
+        padding-left: 0;
+        padding-top: var(--space-5);
+        border-left: none;
+        border-top: 1px solid var(--border-soft);
+    }
+}
+    </style>
+</head>
+<body>
+<div class="ambient-orb orb-1" aria-hidden="true"></div>
+<div class="ambient-orb orb-2" aria-hidden="true"></div>
+<div class="ambient-orb orb-3" aria-hidden="true"></div>
+<div class="noise-overlay" aria-hidden="true"></div>
+<!-- L1 — ACCESSIBILITY + UTILITY SHELL -->
+<a href="#main" class="skip-link" id="skip-link">Skip to main content</a>
+<div class="offline-indicator" id="offline" aria-hidden="true" role="status">
+    <span class="offline-dot"></span> You're offline. Content is cached for offline access.
+</div>
+<div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
+<button class="back-to-top" id="back-to-top" aria-label="Back to top" title="Back to top">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 16V4m0 0L5 9m5-5l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<!-- L2 — FLOATING RAIL NAVIGATION -->
+<nav class="rail-nav" id="rail-nav" aria-label="Section navigation">
+    <ul class="rail-list">
+        <li><a href="#hero" class="rail-link active" data-section="hero" aria-label="Hero"><span class="rail-dot"></span><span class="rail-label">Top</span></a></li>
+        <li><a href="#about" class="rail-link" data-section="about" aria-label="About"><span class="rail-dot"></span><span class="rail-label">About</span></a></li>
+        <li><a href="#work" class="rail-link" data-section="work" aria-label="Work"><span class="rail-dot"></span><span class="rail-label">Work</span></a></li>
+        <li><a href="#services" class="rail-link" data-section="services" aria-label="Services"><span class="rail-dot"></span><span class="rail-label">Services</span></a></li>
+        <li><a href="#approach" class="rail-link" data-section="approach" aria-label="Approach"><span class="rail-dot"></span><span class="rail-label">Approach</span></a></li>
+        <li><a href="#employers" class="rail-link" data-section="employers" aria-label="Employers"><span class="rail-dot"></span><span class="rail-label">Employers</span></a></li>
+        <li><a href="#csipro" class="rail-link" data-section="csipro" aria-label="CSI Pro"><span class="rail-dot"></span><span class="rail-label">CSI Pro</span></a></li>
+        <li><a href="#faq" class="rail-link" data-section="faq" aria-label="FAQ"><span class="rail-dot"></span><span class="rail-label">FAQ</span></a></li>
+    </ul>
+</nav>
+
+<!-- L3 — STICKY HEADER NAVIGATION -->
+<header class="site-header" id="nav" role="banner">
+    <div class="header-inner">
+        <a href="#hero" class="logo" aria-label="Brandon Bell Systems — Home">
+            <span class="logo-bracket">[</span>
+            <span class="logo-text">Brandon Bell</span>
+            <span class="logo-dot">·</span>
+            <span class="logo-text">Systems</span>
+            <span class="logo-bracket">]</span>
+        </a>
+        <nav class="header-nav" aria-label="Main navigation">
+            <ul class="header-nav-list">
+                <li><a href="#work" class="header-nav-link">Work</a></li>
+                <li><a href="#services" class="header-nav-link">Services</a></li>
+                <li><a href="#employers" class="header-nav-link">Employers</a></li>
+                <li><a href="#csipro" class="header-nav-link">CSI Pro</a></li>
+                <li><a href="#faq" class="header-nav-link">FAQ</a></li>
+            </ul>
+        </nav>
+        <div class="header-actions">
+            <a href="#cta-band" class="btn btn-primary btn-sm">Contact</a>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode" title="Toggle theme">
+                <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+            </button>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open menu" aria-expanded="false">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<main id="main">
+
+<!-- L4 — HERO: IDENTITY-PROOF + AUDIENCE ROUTER -->
+<section id="hero" class="hero-section">
+    <div class="container">
+        <div class="hero-badge animate-on-scroll">
+            <span class="badge badge-available">
+                <span class="badge-dot-pulse"></span>
+                Open to: Full-Time · Freelance · Products
+            </span>
+        </div>
+        <h1 class="hero-title animate-on-scroll">
+            <span class="gradient-text">I build production-grade software<br>for people who need tools<br>that don't exist yet.</span>
+        </h1>
+        <p class="hero-sub animate-on-scroll">Senior Customer Success Engineer & Systems Architect with 10 years understanding where friction kills productivity — and building what fixes it.</p> 
+
+                <div class="audience-router animate-on-scroll" id="audience-router">
+            <a href="#employers" class="router-card" data-target="employers" data-audience="employment">
+                <div class="router-icon">🏢</div>
+                <div class="router-content">
+                    <span class="router-title">Employment</span>
+                    <span class="router-desc">View Résumé + Interview</span>
+                </div>
+                <svg class="router-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="#services" class="router-card" data-target="services" data-audience="freelance">
+                <div class="router-icon">🛠</div>
+                <div class="router-content">
+                    <span class="router-title">Need a Tool Built</span>
+                    <span class="router-desc">Submit Intake · Book a Call</span>
+                </div>
+                <svg class="router-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="#csipro" class="router-card" data-target="csipro" data-audience="product">
+                <div class="router-icon">🎯</div>
+                <div class="router-content">
+                    <span class="router-title">Get CSI Pro</span>
+                    <span class="router-desc">Download or Buy Pro</span>
+                </div>
+                <svg class="router-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+        </div>
+
+        <div class="trust-strip animate-on-scroll">
+            <span class="trust-item">📦 6 Shipped</span>
+            <span class="trust-sep"></span>
+            <span class="trust-item">🔒 Zero Data Servers</span>
+            <span class="trust-sep"></span>
+            <span class="trust-item">🧱 Intentional Architecture</span>
+            <span class="trust-sep"></span>
+            <span class="trust-item">♿ WCAG 2.1 AA</span>
+            <span class="trust-sep"></span>
+            <span class="trust-item">💾 Offline Options</span>
+            <span class="trust-sep"></span>
+            <span class="trust-item">🔐 AES-256-GCM</span>
+        </div>
+
+        <div class="hero-preview animate-on-scroll">
+            <div class="preview-window">
+                <div class="preview-chrome">
+                    <span class="chrome-dot chrome-dot-red"></span>
+                    <span class="chrome-dot chrome-dot-yellow"></span>
+                    <span class="chrome-dot chrome-dot-green"></span>
+                    <span class="chrome-title">brandonbellsystems.com</span>
+                </div>
+                <div class="preview-body">
+                    <code class="preview-code">
+                        <span class="code-comment">// Brandon Bell Systems</span>
+                        <span class="code-keyword">const</span> <span class="code-var">architect</span> = {
+                        <span class="code-prop">  name</span>: <span class="code-string">'Brandon Bell'</span>,
+                        <span class="code-prop">  tools</span>: [<span class="code-string">'CSI Pro'</span>, <span class="code-string">'Archeo'</span>, <span class="code-string">'FlakeCapsule'</span>, <span class="code-string">'CAE'</span>],
+                        <span class="code-prop">  philosophy</span>: <span class="code-string">'Single-file sovereignty. Intentional architecture. Encrypted by default.'</span>
+                        };
+                    </code>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- L5 — ABOUT -->
+<section id="about" class="about-section">
+    <div class="container">
+        <div class="section-label animate-on-scroll">About</div>
+        <h2 class="section-title animate-on-scroll">The architect behind the architecture.</h2>
+        <div class="about-grid animate-on-scroll">
+            <div class="about-text">
+                <p>I'm Brandon Bell. I build production-grade software by starting from the thing most builders skip: <strong>understanding what's actually slowing someone down.</strong></p>
+                <p>I've spent 10 years across customer success, service operations, and team management — reading customer emails the way a mechanic listens to an engine. Not from a spec sheet. From the sound it makes when something's wrong.</p>
+                <p>That skill translates directly into how I build software. You fill out an intake form describing your friction — what's broken, missing, or eating hours every week. I read it like I used to read customer escalation tickets: mapping the gap between what you described and what you probably actually need. By the time we have our first call, I've already prototyped something real for you to react to. That conversation reveals more about the real problem than any requirements document could.</p>
+                <p>I've shipped six production applications this way — from a <strong>multi-provider AI intelligence engine delivered as a zero-install single file</strong> (CSI Pro) to a <strong>fully packaged Python CLI built for PyPI with 30+ tests and CI/CD pipelines</strong> (Archeo). The site you're viewing is built to the same standard: a single-file, zero-dependency deployment with a <a href="https://github.com/BrandonBellSystems/brandonbellsystems.com/blob/main/docs/architecture.md" target="_blank" rel="noopener noreferrer">24-category CSS architecture</a> and WCAG 2.1 AA accessibility engineered from layer zero. Architecture is chosen based on the problem. Not the other way around.</p>
+            </div>
+            <div class="about-photo">
+                <img src="headshot.jpg" alt="Brandon Bell — Senior Customer Success Engineer & Systems Architect" class="about-photo-img" width="180" height="180" loading="lazy">
+                <div class="about-badges" style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
+                    <span class="badge badge-available">📍 Available</span>
+                    <span class="badge badge-shipped">Full-Time · Freelance · Products</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- L6 — CASE STUDIES GRID -->
+<section id="work" class="work-section">
+    <div class="container">
+        <div class="section-label animate-on-scroll">Built By Me</div>
+        <h2 class="section-title animate-on-scroll">Production-grade. Architecture-aligned. Encrypted by default.</h2>
+        <div class="case-studies-grid">
+
+            <!-- CSI Pro — Flagship -->
+            <div class="animate-on-scroll" data-delay="0">
+            <article class="case-card case-card-pro">
+                <div class="case-card-glow"></div>
+                <div class="case-card-inner">
+                    <div class="case-badges">
+                        <span class="badge badge-pro">Pro</span>
+                        <span class="badge badge-shipped">Shipped</span>
+                        <span class="badge badge-flagship">[01] Flagship</span>
+                        <span class="badge badge-oss">Single-File Web App</span>
+                    </div>
+                    <h3 class="case-title">Customer Success Intelligence</h3>
+                    <p class="case-subtitle">CSI Pro — Account Intelligence Engine</p>
+                    <div class="case-detail">
+                        <p><strong>Solved:</strong> CS teams spending 6+ hours per QBR manually compiling account health data.</p>
+                        <p><strong>→ Delivered:</strong> Zero-install encrypted engine with 6-provider AI in 8 weeks.</p>
+                        <p><strong>Result:</strong> Launch pricing, license system, Gumroad-ready, WCAG 2.1 AA, AES-256-GCM.</p>
+                    </div>
+                    <div class="case-meta">
+                        <span class="case-stat">⏱ 8 wks</span>
+                        <span class="case-stat">📄 HTML / JS / Web Crypto</span>
+                    </div>
+                    <div class="case-links">
+                        <a href="https://customersuccessintelligence.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">View Live →</a>
+                        <a href="https://brandonbellsystems.gumroad.com/l/csi-pro?wanted=true" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">Buy Pro</a>
+                    </div>
+                </div>
+            </article>
+            </div>
+
+            <!-- Archeo -->
+            <div class="animate-on-scroll" data-delay="80">
+            <article class="case-card">
+                <div class="case-card-glow"></div>
+                <div class="case-card-inner">
+                    <div class="case-badges">
+                        <span class="badge badge-shipped">Built</span>
+                        <span class="badge badge-oss">Open Source</span>
+                        <span class="badge badge-oss">Multi-File Python CLI</span>
+                    </div>
+                    <h3 class="case-title">Archeo</h3>
+                    <p class="case-subtitle">Technical Debt Archaeology CLI</p>
+                    <div class="case-detail">
+                        <p>A fully packaged Python CLI for surfacing technical debt across codebases — TODO/FIXME/HACK detection with Git-blame context, cyclomatic complexity analysis, and AI-generated remediation plans. Built for PyPI distribution. 30+ tests. Bandit-audited. mypy type-checked. CI/CD pipelined across Python 3.9–3.12. MIT licensed. Pending final refinement before release.</p>
+                    </div>
+                    <div class="case-meta">
+                        <span class="case-stat">📦 PyPI-Ready</span>
+                        <span class="case-stat">🧪 30+ Tests</span>
+                        <span class="case-stat">🔓 MIT License</span>
+                    </div>
+                    <div class="case-links">
+                        <span class="badge badge-coming-soon">GitHub — Coming Soon</span>
+                        <span class="badge badge-coming-soon">PyPI — Coming Soon</span>
+                    </div>
+                </div>
+            </article>
+            </div>
+
+            <!-- FlakeCapsule -->
+            <div class="animate-on-scroll" data-delay="160">
+            <article class="case-card">
+                <div class="case-card-glow"></div>
+                <div class="case-card-inner">
+                    <div class="case-badges">
+                        <span class="badge badge-shipped">Shipped</span>
+                        <span class="badge badge-oss">Open Source</span>
+                        <span class="badge badge-oss">Browser Engineering Tool</span>
+                    </div>
+                    <h3 class="case-title">FlakeCapsule</h3>
+                    <p class="case-subtitle">Deterministic Flake Diagnosis Engine</p>
+                    <div class="case-detail">
+                        <p><strong>Solved:</strong> Flaky tests consuming hours of engineering time with no structured diagnosis path.</p>
+                        <p><strong>→ Delivered:</strong> Diagnosis engine reducing flake investigation from hours to under 30 minutes.</p>
+                        <p><strong>Result:</strong> Pattern recognition, history tracking, CI-integrated, open source.</p>
+                    </div>
+                    <div class="case-meta">
+                        <span class="case-stat">📦 Engineering Tool</span>
+                        <span class="case-stat">🔓 Open Source</span>
+                    </div>
+                    <div class="case-links">
+                        <a href="https://github.com/BrandonBellSystems/flakecapsule" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">GitHub →</a>
+                    </div>
+                </div>
+            </article>
+            </div>
+
+            <!-- Build Stability System -->
+            <div class="animate-on-scroll" data-delay="240">
+            <article class="case-card">
+                <div class="case-card-glow"></div>
+                <div class="case-card-inner">
+                    <div class="case-badges">
+                        <span class="badge badge-shipped">Shipped</span>
+                        <span class="badge badge-oss">Productivity / DevOps</span>
+                    </div>
+                    <h3 class="case-title">Build Stability System</h3>
+                    <p class="case-subtitle">Deterministic Replay + SHA-256 Verification</p>
+                    <div class="case-detail">
+                        <p><strong>Solved:</strong> Non-deterministic builds causing deployment failures and debugging nightmares.</p>
+                        <p><strong>→ Delivered:</strong> Deterministic replay with SHA-256 verification pipeline.</p>
+                        <p><strong>Result:</strong> Build reproducibility, cryptographic integrity guarantees, CI-native.</p>
+                    </div>
+                    <div class="case-meta">
+                        <span class="case-stat">📦 DevOps</span>
+                        <span class="case-stat">🔐 SHA-256</span>
+                    </div>
+                    <div class="case-links">
+                        <span class="badge badge-coming-soon">Case Study — Coming Soon</span>
+                    </div>
+                </div>
+            </article>
+            </div>
+
+            <!-- PromptEngine -->
+            <div class="animate-on-scroll" data-delay="320">
+            <article class="case-card">
+                <div class="case-card-glow"></div>
+                <div class="case-card-inner">
+                    <div class="case-badges">
+                        <span class="badge badge-shipped">Shipped</span>
+                        <span class="badge badge-oss">AI Tooling / Browser</span>
+                    </div>
+                    <h3 class="case-title">PromptEngine</h3>
+                    <p class="case-subtitle">Structured Prompt Diagnostics & Optimization</p>
+                    <div class="case-detail">
+                        <p><strong>Solved:</strong> Prompt engineering treated as art, not engineering — no structured evaluation framework.</p>
+                        <p><strong>→ Delivered:</strong> Diagnostic engine for systematic prompt evaluation and optimization.</p>
+                        <p><strong>Result:</strong> Structured testing, versioned prompts, measurable improvement tracking.</p>
+                    </div>
+                    <div class="case-meta">
+                        <span class="case-stat">📦 AI Tooling</span>
+                        <span class="case-stat">🤖 LLM-Optimized</span>
+                    </div>
+                    <div class="case-links">
+                        <span class="badge badge-coming-soon">Case Study — Coming Soon</span>
+                    </div>
+                </div>
+            </article>
+            </div>
+
+            <!-- Client Acquisition Engine -->
+            <div class="animate-on-scroll" data-delay="400">
+            <article class="case-card">
+                <div class="case-card-glow"></div>
+                <div class="case-card-inner">
+                    <div class="case-badges">
+                        <span class="badge badge-shipped">Shipped</span>
+                        <span class="badge badge-oss">Single-File Web App</span>
+                    </div>
+                    <h3 class="case-title">Client Acquisition Engine</h3>
+                    <p class="case-subtitle">All-in-One Freelancer Toolkit — Freelancer Edition v1.0</p>
+                    <div class="case-detail">
+                        <p><strong>Solved:</strong> Freelancers piecing together client acquisition with no structured system — generating offers, crafting outreach, tracking leads, and handling objections across scattered tools.</p>
+                        <p><strong>→ Delivered:</strong> Integrated 4-module toolkit: Offer Generator, Outreach Engine (Cold DM / Email / Follow-up), Lead Pipeline Tracker with stats dashboard, and 8 pre-built Objection Response templates.</p>
+                        <p><strong>Result:</strong> Complete freelancer sales workflow in a single HTML file. localStorage persistence with export/import. WCAG 2.1 AA accessible. Zero-install. No accounts.</p>
+                    </div>
+                    <div class="case-meta">
+                        <span class="case-stat">📄 HTML / JS / CSS</span>
+                        <span class="case-stat">💾 localStorage</span>
+                        <span class="case-stat">♿ WCAG 2.1 AA</span>
+                    </div>
+                    <div class="case-links">
+                        <span class="badge badge-coming-soon">Demo — Coming Soon</span>
+                        <a href="mailto:bbell@brandonbellsystems.com?subject=CAE%20Inquiry" class="btn btn-ghost btn-sm">Inquire →</a>
+                    </div>
+                </div>
+            </article>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- L7 — SERVICES MATRIX -->
+<section id="services" class="services-section">
+    <div class="container">
+        <div class="section-label animate-on-scroll">Services</div>
+        <h2 class="section-title animate-on-scroll">I build tools. You own them. Sovereign by design. Forever.</h2>
+        <div class="services-intro animate-on-scroll">
+            <p class="services-lede">I don't sell a technology. I solve a specific class of problems: the ones where off-the-shelf tools don't fit, where spreadsheets are collapsing, where manual processes are eating hours every week, and where the person feeling the pain doesn't have time to build the fix themselves.</p>
+            <p class="services-lede-close"><strong>You bring me the friction. I bring the architecture.</strong></p>
+        </div>
+
+        <div class="services-tier animate-on-scroll">
+            <h3 class="services-tier-label">Flagship Specialty</h3>
+            <div class="service-card service-card-flagship">
+                <div class="flagship-content">
+                    <div class="service-icon">📄</div>
+                    <h3 class="service-title">Sovereign Single-File Applications</h3>
+                    <p class="service-desc">Zero-install. Zero dependencies. Encrypted by default. Open anywhere. Own it forever.</p>
+                    <p class="service-desc">My deepest expertise — applications delivered as one HTML file that run in any browser with no server, no account, no installation. Ideal when portability, privacy, and zero friction matter most.</p>
+                    <div class="service-evidence">
+                        <span class="evidence-badge">→ CSI Pro — 20-layer architecture, 6 AI providers, AES-256-GCM</span>
+                    </div>
+                </div>
+                <div class="flagship-specs">
+                    <div class="spec-item"><span class="spec-check">✓</span> Zero runtime dependencies</div>
+                    <div class="spec-item"><span class="spec-check">✓</span> AES-256-GCM encryption</div>
+                    <div class="spec-item"><span class="spec-check">✓</span> WCAG 2.1 AA accessible</div>
+                    <div class="spec-item"><span class="spec-check">✓</span> Offline-capable</div>
+                    <div class="spec-item"><span class="spec-check">✓</span> Cross-browser native</div>
+                    <div class="spec-item"><span class="spec-check">✓</span> Single-file deployment</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="services-tier animate-on-scroll">
+            <h3 class="services-tier-label">Also Ship</h3>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">💻</div>
+                    <h3 class="service-title">CLI Tools & Developer Utilities</h3>
+                    <p class="service-desc">Packaged command-line tools, API wrappers, dev tooling. Tested, typed, distributed via PyPI or direct install.</p>
+                    <div class="service-evidence">
+                        <span class="evidence-badge">→ Archeo — Code debt archaeology CLI (PyPI, CI/CD, 30+ tests)</span>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🖥</div>
+                    <h3 class="service-title">Custom Web Applications & Dashboards</h3>
+                    <p class="service-desc">Full-featured web tools, internal dashboards, client portals. Built with the same security and accessibility standards as flagship work.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">⚡</div>
+                    <h3 class="service-title">Automation & Workflow Systems</h3>
+                    <p class="service-desc">Scripts, integrations, data pipelines that eliminate manual work.</p>
+                    <div class="service-evidence">
+                        <span class="evidence-badge">→ Build Stability System · PromptEngine</span>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🌐</div>
+                    <h3 class="service-title">Small Business Websites</h3>
+                    <p class="service-desc">Professional presence sites, landing pages, portfolio work. Fast, accessible, mobile-native, no CMS bloat.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="services-tier animate-on-scroll">
+            <h3 class="services-tier-label">How I Work</h3>
+            <div class="services-process">
+                <div class="process-step">
+                    <span class="process-num">①</span>
+                    <div><strong>Intake</strong> — You describe the friction. Context, not a spec.</div>
+                </div>
+                <div class="process-step">
+                    <span class="process-num">②</span>
+                    <div><strong>Prototype</strong> — I build something rough but real before our first call.</div>
+                </div>
+                <div class="process-step">
+                    <span class="process-num">③</span>
+                    <div><strong>Call</strong> — You react to something concrete, not describe something abstract. That conversation surfaces real requirements faster than any document could.</div>
+                </div>
+                <div class="process-step">
+                    <span class="process-num">④</span>
+                    <div><strong>Delivery</strong> — Production-grade. Tested. Documented. Yours.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="services-cta animate-on-scroll">
+            <button class="btn btn-primary btn-lg" id="open-intake">Submit an Intake — Tell me what's slowing you down →</button>
+        </div>
+        <p class="services-lede" style="text-align: center; margin-top: var(--space-10); font-size: 0.9375rem; color: var(--muted);">
+            Future services may include optional subscriptions and hosted solutions — but they will never block core functionality, and they will never compromise the data privacy that underpins everything I build.
+        </p>
+    </div>
+</section>
+
+<!-- L8 — THE ARCHITECT'S APPROACH -->
+<section id="approach" class="approach-section">
+    <div class="container">
+        <div class="section-label animate-on-scroll">Philosophy</div>
+        <h2 class="section-title animate-on-scroll">Principles that ship. Not posters on a wall.</h2>
+        <div class="principles-grid">
+            <div class="animate-on-scroll" data-delay="0">
+            <div class="principle-card">
+                <div class="principle-icon">🎯</div>
+                <h3 class="principle-title">Problem-Aligned Architecture</h3>
+                <p class="principle-def">I choose the format based on what the problem demands. Sometimes a sovereign single-file app. Sometimes a packaged CLI. Sometimes a web dashboard. The architecture serves the function.</p>
+                <p class="principle-proof"><strong>Proof:</strong> CSI Pro (single-file) + Archeo (multi-file CLI) — two different problems, two different architectures, both correct calls.</p>
+            </div>
+            </div>
+            <div class="animate-on-scroll" data-delay="80">
+            <div class="principle-card">
+                <div class="principle-icon">📄</div>
+                <h3 class="principle-title">Sovereignty Where It Matters</h3>
+                <p class="principle-def">When data control is critical, I build encrypted, offline-first, zero-dependency systems. One file. No servers. Your keys, your data, always.</p>
+                <p class="principle-proof"><strong>Proof:</strong> CSI Pro: ~400KB, 20-layer architecture in one HTML file. Open it anywhere. Own it forever.</p>
+            </div>
+            </div>
+            <div class="animate-on-scroll" data-delay="160">
+            <div class="principle-card">
+                <div class="principle-icon">🧱</div>
+                <h3 class="principle-title">Intentional Dependencies</h3>
+                <p class="principle-def">Every dependency is a cost — attack surface, maintenance burden, version churn. I include them when they earn their place and eliminate them when they don't. Flagship builds take this to zero.</p>
+                <p class="principle-proof"><strong>Proof:</strong> Archeo uses minimal, purposeful deps (pytest, click, rich). CSI Pro uses none. Both were intentional decisions.</p>
+            </div>
+            </div>
+            <div class="animate-on-scroll" data-delay="240">
+            <div class="principle-card">
+                <div class="principle-icon">🔐</div>
+                <h3 class="principle-title">Encryption-First Design</h3>
+                <p class="principle-def">If your app handles data that shouldn't be public, encryption isn't a feature — it's the floor. AES-256-GCM. PBKDF2 key derivation. Keys stay with you.</p>
+                <p class="principle-proof"><strong>Proof:</strong> CSI Pro vault system. Zero data servers. Nothing touches a network that shouldn't.</p>
+             </div>
+            </div>
+            <div class="animate-on-scroll" data-delay="320">
+            <div class="principle-card">
+                <div class="principle-icon">♿</div>
+                <h3 class="principle-title">Accessibility-as-Architecture</h3>
+                <p class="principle-def">WCAG 2.1 AA architected in from layer 0. Skip links, ARIA landmarks, keyboard navigation, screen reader support, reduced motion. Not retrofitted. Ever.</p>
+                <p class="principle-proof"><strong>Proof:</strong> Every shipped project — auditable, verifiable, non-negotiable.</p>
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- L9 — FOR EMPLOYERS -->
+<section id="employers" class="employers-section">
+    <div class="container">
+        <div class="section-label animate-on-scroll">For Employers</div>
+        <h2 class="section-title animate-on-scroll">The candidate who shipped the portfolio, not just described it.</h2>
+        <div class="employers-grid animate-on-scroll">
+            <ul class="employers-list">
+                <li class="employer-bullet">
+                    <span class="bullet-icon">✓</span>
+                    <div><strong>10 years enterprise Customer Success</strong> — Fortune 500 accounts, SaaS workflows, churn signal detection, QBR ownership. I understand what business-critical software needs to <em>do</em>, not just how to build it.</div>
+                </li>
+                <li class="employer-bullet">
+                    <span class="bullet-icon">✓</span>
+                    <div><strong>6 production applications shipped</strong> — spanning single-file web apps, packaged Python CLIs, browser engineering tools, and AI-integrated platforms. Different problems, different architectures, all production-grade.</div>
+                </li>
+                <li class="employer-bullet">
+                    <span class="bullet-icon">✓</span>
+                    <div><strong>Senior Customer Success Engineer & Systems Architect</strong> — I design complete stacks mentally before code is written. Specifications, acceptance criteria, validation checkpoints. AI amplifies execution; it doesn't replace judgment.</div>
+                </li>
+                <li class="employer-bullet">
+                    <span class="bullet-icon">✓</span>
+                    <div><strong>Cross-paradigm capable</strong> — I've shipped enough across enough formats to know that good architecture transcends stack. Put me in a React codebase, a Python repo, or a greenfield project. Productive in days, not weeks.</div>
+                </li>
+            </ul>
+            <div class="employers-ctas">
+                                <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    View Résumé
+                </a>
+                <a href="resume.pdf" class="btn btn-ghost btn-lg" download>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                    Download PDF
+                </a>
+                <a href="https://www.linkedin.com/in/brandon-bell" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-lg">LinkedIn Profile →</a>
+                <button class="btn btn-ghost btn-lg" id="open-contact-employer">Contact Me Directly →</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- L10 — CSI PRO SPOTLIGHT -->
+<section id="csipro" class="csipro-section">
+    <div class="container">
+        <div class="section-label animate-on-scroll">Flagship Product</div>
+        <h2 class="section-title animate-on-scroll">CSI Pro — The account intelligence engine that ships with its own architecture.</h2>
+        <div class="csipro-content animate-on-scroll">
+            <div class="csipro-card">
+                <div class="csipro-highlights">
+                    <div class="csipro-highlight">
+                        <span class="highlight-label">QBR prep time</span>
+                        <span class="highlight-value">6 hrs → &lt; 2 min</span>
+                    </div>
+                    <div class="csipro-highlight">
+                        <span class="highlight-label">Build time</span>
+                        <span class="highlight-value">8 weeks to launch</span>
+                    </div>
+                    <div class="csipro-highlight">
+                        <span class="highlight-label">AI providers</span>
+                        <span class="highlight-value">6 integrated</span>
+                    </div>
+                    <div class="csipro-highlight">
+                        <span class="highlight-label">Security</span>
+                        <span class="highlight-value">AES-256-GCM</span>
+                    </div>
+                </div>
+                <div class="csipro-trust">
+                    <span>🔒 Zero Data Servers</span>
+                    <span>♿ WCAG 2.1 AA</span>
+                    <span>📄 Single-File Architecture</span>
+                    <span>💾 Offline-Capable</span>
+                </div>
+                <div class="csipro-ctas">
+                    <a href="https://customersuccessintelligence.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">Visit CSI Pro →</a>
+                    <a href="https://brandonbellsystems.gumroad.com/l/csi-pro" target="_blank" rel="noopener noreferrer" class="btn btn-accent btn-lg">Buy Pro — Gumroad →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- L11 — PERSONAL FAQ (Accordion) -->
+<section id="faq" class="faq-section">
+    <div class="container">
+        <div class="section-label animate-on-scroll">FAQ</div>
+        <h2 class="section-title animate-on-scroll">Questions I get asked. Answered directly.</h2>
+
+        <div class="faq-category animate-on-scroll">
+            <h3 class="faq-cat-title">For Employers</h3>
+            <div class="faq-accordion">
+                <div class="faq-item">
+                    <button class="faq-trigger" aria-expanded="false" id="faq-trigger-1">
+                        <span>What's your availability timeline?</span>
+                        <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="faq-panel" role="region" aria-labelledby="faq-trigger-1" hidden>
+                        <p>I'm currently available for full-time roles and open to exploring opportunities. I'm open to contract-to-hire arrangements and can accommodate most start date requirements with sufficient notice. For the right role, I'll make the timeline work.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger" aria-expanded="false" id="faq-trigger-2">
+                        <span>Are you looking for full-time or contract?</span>
+                        <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="faq-panel" role="region" aria-labelledby="faq-trigger-2" hidden>
+                        <p>Primarily full-time roles where I can bring my architecture-first approach to a team building serious software. I'm also open to select consulting engagements where the problem space aligns with my expertise in single-file architecture, encryption-first design, and zero-dependency systems.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger" aria-expanded="false" id="faq-trigger-3">
+                        <span>How does your human+AI collaboration process work?</span>
+                        <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="faq-panel" role="region" aria-labelledby="faq-trigger-3" hidden>
+                        <p>I use LLMs as an implementation team — not a replacement for architectural thinking. I define the architecture, system design, security perimeter, and accessibility requirements first. Then I collaborate with AI to accelerate implementation while maintaining strict governance over every line of code. The result: 8-week delivery cycles for what typically takes teams of 3-5 engineers quarters to build.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger" aria-expanded="false" id="faq-trigger-4">
+                        <span>What's your tech stack?</span>
+                        <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="faq-panel" role="region" aria-labelledby="faq-trigger-4" hidden>
+                        <p>The browser platform itself: HTML, CSS, JavaScript, Web Crypto API. I build on the only runtime that's guaranteed to exist in 20 years. No React, no npm, no CDN dependencies. When I need compute beyond the browser, I reach for Node.js with the same zero-dependency discipline. I select the right tool for the architecture, never the other way around.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger" aria-expanded="false" id="faq-trigger-5">
+                        <span>Can you work onsite, remote, or hybrid?</span>
+                        <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="faq-panel" role="region" aria-labelledby="faq-trigger-5" hidden>
+                        <p>Remote-first is my default — it's how I've shipped everything in my portfolio. I'm open to hybrid arrangements in select locations and will consider onsite for the right team and mission. What matters most is the work, the team, and the architecture we're building together.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-category animate-on-scroll">
+            <h3 class="faq-cat-title">For Clients</h3>
+            <div class="faq-accordion">
+                <div class="faq-item">
+                    <button class="faq-trigger" aria-expanded="false" id="faq-trigger-6">
+                        <span>What's your pricing model?</span>
+                        <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="faq-panel" role="region" aria-labelledby="faq-trigger-6" hidden>
+                        <p>Project-based pricing determined during the intake process. Every project starts with a free architecture call where we scope the work, define the deliverables, and agree on a fixed price. No hourly billing. No surprises. You pay for the tool, not my time.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger" aria-expanded="false" id="faq-trigger-7">
+                        <span>How long does a typical project take?</span>
+                        <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="faq-panel" role="region" aria-labelledby="faq-trigger-7" hidden>
+                        <p>Most projects ship in 4-12 weeks, depending on scope. CSI Pro — a full account intelligence engine with 6 AI providers, encryption, and licensing — shipped in 8 weeks. Smaller tools can ship in 2-4 weeks. The architecture-first approach eliminates the rework that typically consumes 60%+ of development time.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger" aria-expanded="false" id="faq-trigger-8">
+                        <span>Do you provide ongoing maintenance?</span>
+                        <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="faq-panel" role="region" aria-labelledby="faq-trigger-8" hidden>
+                        <p>Yes. Every shipped tool includes a 90-day warranty period. After that, I offer maintenance retainers for ongoing support, updates, and enhancements. But because the tools are zero-dependency, there's very little that breaks over time — the code you get today runs the same way in 5 years.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger" aria-expanded="false" id="faq-trigger-9">
+                        <span>What's the intake and build process?</span>
+                        <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="faq-panel" role="region" aria-labelledby="faq-trigger-9" hidden>
+                        <p>1) You submit the intake form. 2) We have a free architecture call to scope and align. 3) I deliver a fixed-price proposal with milestones. 4) Build happens in transparent phases with regular demos. 5) You receive a single sovereign file you own forever. No lock-in. No subscription. Just the tool.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger" aria-expanded="false" id="faq-trigger-10">
+                        <span>Why single-file / zero-dependency?</span>
+                        <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="faq-panel" role="region" aria-labelledby="faq-trigger-10" hidden>
+                        <p>Because software that depends on 300 npm packages is a liability, not an asset. Single-file architecture means: no breaking changes from dependency updates, no CDN outages, no framework migrations, no install steps. Open the file in any browser — it works. Today. In 10 years. This is what production-grade actually means.</p>
+                        <p>I don't only build single-file applications — I choose the architecture that fits the problem. Archeo is a multi-file Python CLI. Future tools may be hosted services or browser dashboards. Privacy-first design is what I'm passionate about. The file format is just one expression of that commitment.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-category animate-on-scroll">
+            <h3 class="faq-cat-title">General</h3>
+            <div class="faq-accordion">
+                <div class="faq-item">
+                    <button class="faq-trigger" aria-expanded="false" id="faq-trigger-11">
+                        <span>Who is Brandon Bell?</span>
+                        <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="faq-panel" role="region" aria-labelledby="faq-trigger-11" hidden>
+                        <p>A Senior Customer Success Engineer & Systems Architect who spent a decade in enterprise Customer Success before teaching himself to code at the architecture level. I discovered a gap: the people closest to the problem — CS teams, operators, domain experts — had no one building tools for them. So I became that person. Now I build production-grade software for people who need tools that don't exist yet.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger" aria-expanded="false" id="faq-trigger-12">
+                        <span>How can I try CSI Pro?</span>
+                        <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="faq-panel" role="region" aria-labelledby="faq-trigger-12" hidden>
+                        <p>Visit <a href="https://customersuccessintelligence.com">customersuccessintelligence.com</a> for the free v2.3.0 download, full product details, feature walkthrough, and purchase options. CSI Pro has a Pro Upgrade tier available now on Gumroad with a one-time purchase — no subscription required.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger" aria-expanded="false" id="faq-trigger-13">
+                        <span>Do you take equity-based projects?</span>
+                        <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="faq-panel" role="region" aria-labelledby="faq-trigger-13" hidden>
+                        <p>Selectively — for the right founder, the right problem, and the right terms. Equity arrangements require deep alignment on vision, timeline, and my role as architect (not just builder). If you're exploring this path, submit an intake and mention equity in the project description.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger" aria-expanded="false" id="faq-trigger-14">
+                        <span>What industries have you served?</span>
+                        <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="faq-panel" role="region" aria-labelledby="faq-trigger-14" hidden>
+                        <p>SaaS, enterprise Customer Success, developer tools, AI tooling, and secure systems design. My architecture-first methodology is industry-agnostic — I solve structural problems, not vertical-specific ones. The common thread: building tools for domain experts who've been underserved by traditional software development.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger" aria-expanded="false" id="faq-trigger-15">
+                        <span>Do you only build single-file applications?</span>
+                        <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="faq-panel" role="region" aria-labelledby="faq-trigger-15" hidden>
+                        <p>No — that's my flagship specialty and deepest expertise, but I ship across the full stack. CSI Pro is a single-file sovereign web app. Archeo is a multi-file Python CLI distributed via PyPI with CI/CD and 30+ tests. FlakeCapsule is a browser-based engineering tool. I choose the architecture based on what the problem requires. The common thread across all of them: production-grade, secure, accessible, and built to solve actual friction — not to prove a point about file formats.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger" aria-expanded="false" id="faq-trigger-16">
+                        <span>What kinds of projects do you take on?</span>
+                        <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="faq-panel" role="region" aria-labelledby="faq-trigger-16" hidden>
+                        <p>Most things that involve building software someone actually needs right now. Small business websites needing a professional presence. Internal dashboards replacing spreadsheet chaos. CLI wrappers around APIs teams use daily. Automation scripts reclaiming hours per week. Sovereign apps where data privacy is non-negotiable. Full applications where nothing off-the-shelf fits. If you're unsure whether your project fits — submit the intake form. If I can't help, I'll say so upfront. If I can, we'll figure out the right architecture together.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger" aria-expanded="false" id="faq-trigger-18">
+                        <span>What are your monetization and pricing models?</span>
+                        <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="faq-panel" role="region" aria-labelledby="faq-trigger-18" hidden>
+                        <p><strong>CSI Pro</strong> was my first production-grade release. It ships as a free core application with a one-time Pro upgrade for enhanced features. The core architecture is free to own forever — no subscriptions, no forced spending, no feature-gating that blocks basic functionality. If a significant future upgrade warrants a cost, that will be stated upfront. No surprises.</p>
+                        <p>That model is one approach. It is not the only approach I will use. Over time I will offer other products and services that operate under different pricing structures — including potential subscriptions for ongoing capabilities like automation, orchestration, or hosted infrastructure. What does not change across any model is the foundation: <strong>your data is yours, and I do not want it.</strong></p>
+                        <p>No service I build will ever evolve into data extraction. That is the architectural floor, not a feature. Single-file HTML architectures represent maximum sovereignty — the data never leaves your device. Hosted services, multi-file applications, or CLI tools extend capability but inherently reduce sovereignty. That is a trade-off, not a betrayal. I will be direct about those trade-offs wherever they exist.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- L12 — RESEARCH & WRITING PLACEHOLDER -->
+<section id="research" class="research-section">
+    <div class="container">
+        <div class="section-label animate-on-scroll">Research</div>
+        <h2 class="section-title animate-on-scroll">Ideas in motion. Architecture in progress.</h2>
+        <div class="research-placeholder animate-on-scroll">
+            <div class="research-card-muted">
+                <p class="research-note">This section will house research, writing, and architectural explorations on single-file sovereignty, encryption-first design, zero-trust systems, and the future of human-AI collaboration. For now — it's being built with the same care as everything else.</p>
+                <div class="research-tags">
+                    <span class="research-tag">Single-File Architecture</span>
+                    <span class="research-tag">AI-Native Architecture</span>
+                    <span class="research-tag">Web Crypto API</span>
+                    <span class="research-tag">Human + AI Collaboration</span>
+                    <span class="research-tag">Zero-Trust Systems</span>
+                </div>
+                <span class="badge badge-coming-soon">Coming Soon</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- L13 — CONVERSION CTA BAND -->
+<section id="cta-band" class="cta-band-section">
+    <div class="container">
+        <div class="cta-band animate-on-scroll">
+            <h2 class="cta-band-title">Ready to build something that doesn't exist yet?</h2>
+            <p class="cta-band-sub">Three paths. One architect. Intentional architecture.</p>
+            <div class="cta-band-cards">
+                <div class="cta-path" data-audience="employment">
+                    <div class="cta-path-icon">🏢</div>
+                    <h3>Hiring?</h3>
+                    <p>View my résumé and let's talk about the role.</p>
+                    <a href="#employers" class="btn btn-primary">View Résumé →</a>
+                </div>
+                <div class="cta-path" data-audience="freelance">
+                    <div class="cta-path-icon">🛠</div>
+                    <h3>Need a tool?</h3>
+                    <p>Submit an intake and we'll scope it together.</p>
+                    <button class="btn btn-accent" id="open-intake-cta">Start Intake →</button>
+                </div>
+                <div class="cta-path" data-audience="product">
+                    <div class="cta-path-icon">🎯</div>
+                    <h3>Want CSI Pro?</h3>
+                    <p>Try the account intelligence engine today.</p>
+                    <a href="https://customersuccessintelligence.com" target="_blank" rel="noopener noreferrer" class="btn btn-green">Get CSI Pro →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<!-- L14 — FOOTER -->
+<footer class="site-footer" role="contentinfo">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <span class="footer-logo">[Brandon Bell · Systems]</span>
+                <p class="footer-tagline">I build production-grade software for people who need tools that don't exist yet.</p>
+                <div class="footer-badges">
+                    <span class="badge badge-shipped">📦 6 Shipped</span>
+                    <span class="badge badge-oss">🔓 Open Source</span>
+                    <span class="badge badge-available">📍 Available</span>
+                    <span class="badge badge-shipped">Full-Time · Freelance · Products</span>
+                </div>
+            </div>
+            <div class="footer-col footer-nav-col">
+                <h4 class="footer-heading">Site</h4>
+                <ul class="footer-nav">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#work">Work</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#approach">Approach</a></li>
+                    <li><a href="#employers">For Employers</a></li>
+                    <li><a href="#csipro">CSI Pro</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-col footer-links-col">
+                <h4 class="footer-heading">Connect</h4>
+                <ul class="footer-nav">
+                    <li><a href="mailto:bbell@brandonbellsystems.com">Email</a></li>
+                    <li><a href="https://www.linkedin.com/in/brandon-bell" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                    <li><a href="https://github.com/BrandonBellSystems" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                    <li><a href="https://github.com/BrandonBellSystems/brandonbellsystems.com" target="_blank" rel="noopener noreferrer">Portfolio Source</a></li>
+                    <li><a href="https://x.com/BrandonBSystems" target="_blank" rel="noopener noreferrer">X / Twitter</a></li>
+                    <li><a href="https://www.reddit.com/user/Brandon_Bell_Systems/" target="_blank" rel="noopener noreferrer">Reddit</a></li>
+                    <li><a href="https://news.ycombinator.com/user?id=Brandon_Bell" target="_blank" rel="noopener noreferrer">Hacker News</a></li>
+                    <li><a href="https://customersuccessintelligence.com" target="_blank" rel="noopener noreferrer">CSI Pro</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copy">© 2026 Brandon Bell Systems. Intentional architecture. Sovereign where it matters. Accessible always.</p>
+            <p class="footer-built">Built by Brandon Bell Systems · <a href="https://github.com/BrandonBellSystems/brandonbellsystems.com" target="_blank" rel="noopener noreferrer">View Source ↗</a></p>
+        </div>
+    </div>
+</footer>
+
+<!-- CONTACT MODAL -->
+<div class="modal-overlay" id="contact-modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-header">
+            <h2 id="modal-title" class="modal-title">Get in Touch</h2>
+            <button class="modal-close" id="modal-close" aria-label="Close dialog">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="contact-form" class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+                <input type="hidden" name="form-name" value="contact">
+                <p class="hidden-field" aria-hidden="true">
+                    <label>Don't fill this out if you're human: <input name="bot-field"></label>
+                </p>
+                <input type="hidden" name="category" id="form-category" value="general">
+                <div class="form-group">
+                    <label for="form-name">Name</label>
+                    <input type="text" id="form-name" name="name" required autocomplete="name" placeholder="Your name">
+                </div>
+                <div class="form-group">
+                    <label for="form-email">Email</label>
+                    <input type="email" id="form-email" name="email" required autocomplete="email" placeholder="you@company.com">
+                </div>
+                <div class="form-group">
+                    <label for="form-company">Company (optional)</label>
+                    <input type="text" id="form-company" name="company" autocomplete="organization" placeholder="Your company">
+                </div>
+                <div class="form-group">
+                    <label for="form-message">What are you looking to build or discuss?</label>
+                    <textarea id="form-message" name="message" rows="4" required placeholder="Tell me about the project, role, or question..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg form-submit-btn">
+                    <span class="submit-text">Send Message</span>
+                    <span class="submit-loader" aria-hidden="true"></span>
+                </button>
+                        </form>
+            <noscript>
+                <p class="form-fallback" style="text-align:center;padding:1rem 0 0;font-size:0.875rem;color:var(--fg-dim);">
+                    JavaScript is disabled.
+                    <a href="mailto:bbell@brandonbellsystems.com?subject=Contact%20Inquiry">Email me directly →</a>
+                </p>
+            </noscript>
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    'use strict';
+
+    // ──────────────────────────────────────────────
+    // SYSTEM 01 — THEME ENGINE
+    // ──────────────────────────────────────────────
+    const html = document.documentElement;
+    const themeToggle = document.getElementById('theme-toggle');
+    const STORAGE_KEY = 'bbs-theme';
+
+    function getSystemPreference() {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    function getStoredTheme() {
+        try { return localStorage.getItem(STORAGE_KEY); } catch (e) { return null; }
+    }
+
+    function setStoredTheme(theme) {
+        try { localStorage.setItem(STORAGE_KEY, theme); } catch (e) {}
+    }
+
+    function applyTheme(theme) {
+        html.setAttribute('data-theme', theme);
+        const metaTheme = document.querySelector('meta[name="theme-color"]');
+        if (metaTheme) metaTheme.setAttribute('content', theme === 'dark' ? '#0a0c10' : '#f4f6f9');
+    }
+
+    function initTheme() {
+        const stored = getStoredTheme();
+        const theme = stored || getSystemPreference();
+        applyTheme(theme);
+        if (!stored) setStoredTheme(theme);
+        html.classList.add('ready');
+    }
+
+    function toggleTheme() {
+        const current = html.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+        setStoredTheme(next);
+    }
+
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleTheme);
+    }
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+        if (!getStoredTheme()) {
+            applyTheme(e.matches ? 'dark' : 'light');
+        }
+    });
+
+    initTheme();
+
+    // ──────────────────────────────────────────────
+    // SYSTEM 02 — SCROLL SPY + RAIL NAV
+    // ──────────────────────────────────────────────
+    const railLinks = document.querySelectorAll('.rail-link');
+    const sections = [];
+
+    railLinks.forEach(function(link) {
+        const id = link.getAttribute('data-section');
+        const el = document.getElementById(id);
+        if (el) sections.push({ id: id, el: el, link: link });
+    });
+
+    function updateRailNav() {
+        const scrollPos = window.scrollY + window.innerHeight * 0.35;
+        let activeId = sections.length > 0 ? sections[0].id : null;
+
+        for (let i = sections.length - 1; i >= 0; i--) {
+            if (sections[i].el.offsetTop <= scrollPos) {
+                activeId = sections[i].id;
+                break;
+            }
+        }
+
+        railLinks.forEach(function(link) {
+            const sid = link.getAttribute('data-section');
+            link.classList.toggle('active', sid === activeId);
+        });
+    }
+
+    // Smooth scroll for rail nav
+    railLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = link.getAttribute('data-section');
+            const target = document.getElementById(targetId);
+            if (target) {
+                const header = document.getElementById('nav');
+                const offset = header ? header.offsetHeight + 16 : 16;
+                window.scrollTo({
+                    top: target.offsetTop - offset,
+                    behavior: 'smooth'
+                });
+                history.replaceState(null, null, '#' + targetId);
+            }
+        });
+    });
+
+    // ──────────────────────────────────────────────
+    // SYSTEM 03 — INTERSECTION OBSERVER (Scroll Animate)
+    // ──────────────────────────────────────────────
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!prefersReducedMotion) {
+        const observerOptions = { threshold: 0.05, rootMargin: '0px 0px 80px 0px' };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(function(el) {
+            observer.observe(el);
+        });
+    } else {
+        document.querySelectorAll('.animate-on-scroll').forEach(function(el) {
+            el.classList.add('visible');
+        });
+    }
+
+    // ──────────────────────────────────────────────
+    // SYSTEM 04 — MOUSE-TRACKING GLOW + 3D TILT
+    // ──────────────────────────────────────────────
+    if (!prefersReducedMotion) {
+        var tiltCards = document.querySelectorAll('.case-card, .principle-card, .service-card, .router-card');
+        tiltCards.forEach(function(card) {
+            card.addEventListener('mousemove', function(e) {
+                var rect = card.getBoundingClientRect();
+                var x = ((e.clientX - rect.left) / rect.width) * 100;
+                var y = ((e.clientY - rect.top) / rect.height) * 100;
+                card.style.setProperty('--mouse-x', x + '%');
+                card.style.setProperty('--mouse-y', y + '%');
+                
+                // 3D tilt math
+                var rotateX = ((e.clientY - rect.top) / rect.height - 0.5) * -10;
+                var rotateY = ((e.clientX - rect.left) / rect.width - 0.5) * 10;
+                card.style.setProperty('--rotate-x', rotateX + 'deg');
+                card.style.setProperty('--rotate-y', rotateY + 'deg');
+            });
+            card.addEventListener('mouseleave', function() {
+                card.style.setProperty('--mouse-x', '50%');
+                card.style.setProperty('--mouse-y', '50%');
+                card.style.setProperty('--rotate-x', '0deg');
+                card.style.setProperty('--rotate-y', '0deg');
+            });
+        });
+    }
+
+    // SYSTEM 04b — HERO PREVIEW PARALLAX
+    const previewWindow = document.querySelector('.preview-window');
+    if (previewWindow && !prefersReducedMotion) {
+        document.addEventListener('mousemove', (e) => {
+            const x = (window.innerWidth / 2 - e.pageX) / 50;
+            const y = (window.innerHeight / 2 - e.pageY) / 50;
+            previewWindow.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
+            previewWindow.style.transition = 'transform 0.1s ease-out';
+        });
+    }
+
+    // ──────────────────────────────────────────────
+    // SYSTEM 05 — FAQ ACCORDION
+    // ──────────────────────────────────────────────
+    const faqTriggers = document.querySelectorAll('.faq-trigger');
+
+    faqTriggers.forEach(function(trigger) {
+        trigger.addEventListener('click', function() {
+            const expanded = trigger.getAttribute('aria-expanded') === 'true';
+            const panel = trigger.nextElementSibling;
+
+            // Close all in same accordion
+            const accordion = trigger.closest('.faq-accordion');
+            if (accordion) {
+                accordion.querySelectorAll('.faq-trigger').forEach(function(t) {
+                    if (t !== trigger) {
+                        t.setAttribute('aria-expanded', 'false');
+                        const p = t.nextElementSibling;
+                        if (p) p.setAttribute('hidden', '');
+                    }
+                });
+            }
+
+            trigger.setAttribute('aria-expanded', !expanded);
+            if (panel) {
+                if (expanded) {
+                    panel.setAttribute('hidden', '');
+                } else {
+                    panel.removeAttribute('hidden');
+                }
+            }
+        });
+
+        // Keyboard: Enter/Space to toggle
+        trigger.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                trigger.click();
+            }
+        });
+    });
+
+    // Keyboard nav between FAQ triggers
+    document.querySelectorAll('.faq-accordion').forEach(function(acc) {
+        const triggers = acc.querySelectorAll('.faq-trigger');
+        triggers.forEach(function(trigger, idx) {
+            trigger.addEventListener('keydown', function(e) {
+                let target;
+                if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    target = triggers[idx + 1] || triggers[0];
+                } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    target = triggers[idx - 1] || triggers[triggers.length - 1];
+                } else if (e.key === 'Home') {
+                    e.preventDefault();
+                    target = triggers[0];
+                } else if (e.key === 'End') {
+                    e.preventDefault();
+                    target = triggers[triggers.length - 1];
+                }
+                if (target) target.focus();
+            });
+        });
+    });
+
+    // ──────────────────────────────────────────────
+    // SYSTEM 06 — TOAST SYSTEM
+    // ──────────────────────────────────────────────
+    const toastContainer = document.getElementById('toast-container');
+
+    function showToast(message, type) {
+        type = type || 'info';
+        const toast = document.createElement('div');
+        toast.className = 'toast toast-' + type;
+        toast.setAttribute('role', 'alert');
+        toast.innerHTML = '<span class="toast-msg">' + message + '</span><span class="toast-progress"></span>';
+        toastContainer.appendChild(toast);
+
+        requestAnimationFrame(function() { toast.classList.add('toast-visible'); });
+
+        setTimeout(function() {
+            toast.classList.remove('toast-visible');
+            setTimeout(function() {
+                if (toast.parentNode) toast.parentNode.removeChild(toast);
+            }, 300);
+        }, 4000);
+    }
+
+    // ──────────────────────────────────────────────
+    // SYSTEM 07 — OFFLINE INDICATOR
+    // ──────────────────────────────────────────────
+    const offlineIndicator = document.getElementById('offline');
+
+    function updateOfflineStatus() {
+        if (!navigator.onLine) {
+            offlineIndicator.removeAttribute('aria-hidden');
+        } else {
+            offlineIndicator.setAttribute('aria-hidden', 'true');
+        }
+    }
+
+    window.addEventListener('online', updateOfflineStatus);
+    window.addEventListener('offline', updateOfflineStatus);
+    updateOfflineStatus();
+
+    // ──────────────────────────────────────────────
+    // SYSTEM 08 — BACK TO TOP
+    // ──────────────────────────────────────────────
+    const backToTopBtn = document.getElementById('back-to-top');
+
+    function updateBackToTop() {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('visible');
+        } else {
+            backToTopBtn.classList.remove('visible');
+        }
+    }
+
+    backToTopBtn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ──────────────────────────────────────────────
+    // SYSTEM 09 — FORM HANDLER
+    // ──────────────────────────────────────────────
+    const contactForm = document.getElementById('contact-form');
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const submitBtn = contactForm.querySelector('.form-submit-btn');
+            const submitText = submitBtn.querySelector('.submit-text');
+            const submitLoader = submitBtn.querySelector('.submit-loader');
+
+            submitBtn.disabled = true;
+            submitText.style.opacity = '0.6';
+            submitLoader.classList.add('active');
+
+            var formData = new FormData(contactForm);
+
+            fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams(formData).toString()
+            })
+            .then(function() {
+                showToast('Message sent successfully! I\'ll respond within 48 hours.', 'success');
+                contactForm.reset();
+                closeModal();
+            })
+            .catch(function() {
+                showToast('Something went wrong. Please try again or email me directly.', 'error');
+            })
+            .finally(function() {
+                submitBtn.disabled = false;
+                submitText.style.opacity = '1';
+                submitLoader.classList.remove('active');
+            });
+        });
+    }
+
+    // ──────────────────────────────────────────────
+    // SYSTEM 10 — AUDIENCE ROUTER
+    // ──────────────────────────────────────────────
+    document.querySelectorAll('.router-card').forEach(function(card) {
+        card.addEventListener('click', function() {
+            var targetId = card.getAttribute('data-target');
+            var target = document.getElementById(targetId);
+            if (target) {
+                var header = document.getElementById('nav');
+                var offset = header ? header.offsetHeight + 16 : 16;
+                window.scrollTo({
+                    top: target.offsetTop - offset,
+                    behavior: 'smooth'
+                });
+                history.replaceState(null, null, '#' + targetId);
+            }
+        });
+    });
+
+    // ──────────────────────────────────────────────
+    // SYSTEM 11 — CONTACT MODAL
+    // ──────────────────────────────────────────────
+    const contactModal = document.getElementById('contact-modal');
+    const modalClose = document.getElementById('modal-close');
+    const modalBackdrop = contactModal ? contactModal.querySelector('.modal-backdrop') : null;
+    const formCategory = document.getElementById('form-category');
+    const modalTitle = document.getElementById('modal-title');
+    let lastFocusedEl = null;
+
+    function openModal(category) {
+        if (!contactModal) return;
+        lastFocusedEl = document.activeElement;
+
+        if (category && formCategory) formCategory.value = category;
+        if (category && modalTitle) {
+            var titles = {
+                employment: 'Contact — Employment Inquiry',
+                freelance: 'Contact — Project Intake',
+                product: 'Contact — CSI Pro Inquiry'
+            };
+            modalTitle.textContent = titles[category] || 'Get in Touch';
+        }
+
+        contactModal.setAttribute('aria-hidden', 'false');
+        contactModal.classList.add('modal-open');
+        document.body.style.overflow = 'hidden';
+
+        // Focus first input
+        setTimeout(function() {
+            var firstInput = contactModal.querySelector('input:not([type="hidden"]):not([name="bot-field"])');
+            if (firstInput) firstInput.focus();
+        }, 100);
+    }
+
+    function closeModal() {
+        if (!contactModal) return;
+        contactModal.setAttribute('aria-hidden', 'true');
+        contactModal.classList.remove('modal-open');
+        document.body.style.overflow = '';
+
+        if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') {
+            lastFocusedEl.focus();
+        }
+    }
+
+    if (modalClose) modalClose.addEventListener('click', closeModal);
+    if (modalBackdrop) modalBackdrop.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && contactModal && contactModal.classList.contains('modal-open')) {
+            closeModal();
+        }
+    });
+
+    // Modal open triggers
+    var intakeTrigger = document.getElementById('open-intake');
+    var intakeCtaTrigger = document.getElementById('open-intake-cta');
+    var employerTrigger = document.getElementById('open-contact-employer');
+
+    if (intakeTrigger) intakeTrigger.addEventListener('click', function() { openModal('freelance'); });
+    if (intakeCtaTrigger) intakeCtaTrigger.addEventListener('click', function() { openModal('freelance'); });
+    if (employerTrigger) employerTrigger.addEventListener('click', function() { openModal('employment'); });
+
+    // ──────────────────────────────────────────────
+    // SYSTEM 12 — CONSOLE IDENTITY
+    // ──────────────────────────────────────────────
+    console.info(
+        '%c[ Brandon Bell Systems ]%c\n\n' +
+        'Production-grade software for tools that do not exist yet.\n' +
+'6 tools shipped. WCAG 2.1 AA. AES-256-GCM. Senior CS Engineer & Systems Architect.\n' +
+        'This site is the architecture it describes.\n\n' +
+        'Contact: bbell@brandonbellsystems.com\n' +
+        'GitHub: github.com/BrandonBellSystems',
+        'color: #60a5fa; font-weight: 700; font-size: 1.1em;',
+        'color: #a8b0c4;'
+    );
+
+    // ──────────────────────────────────────────────
+    // COMBINED SCROLL LISTENER (debounced)
+    // ──────────────────────────────────────────────
+    var scrollTicking = false;
+    window.addEventListener('scroll', function() {
+        if (!scrollTicking) {
+            requestAnimationFrame(function() {
+                updateRailNav();
+                updateBackToTop();
+                // ADD THIS LINE:
+                document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10);
+                scrollTicking = false;
+            });
+            scrollTicking = true;
+        }
+    }, { passive: true });
+
+    // ──────────────────────────────────────────────
+    // URL HASH ROUTING ON LOAD
+    // ──────────────────────────────────────────────
+    window.addEventListener('load', function() {
+        var hash = window.location.hash;
+        if (hash) {
+            var target = document.querySelector(hash);
+            if (target) {
+                setTimeout(function() {
+                    var header = document.getElementById('nav');
+                    var offset = header ? header.offsetHeight + 16 : 16;
+                    window.scrollTo({
+                        top: target.offsetTop - offset,
+                        behavior: 'smooth'
+                    });
+                }, 300);
+            }
+        }
+    });
+
+    // ──────────────────────────────────────────────
+    // MOBILE MENU
+    // ──────────────────────────────────────────────
+    var mobileBtn = document.getElementById('mobile-menu-btn');
+    var headerNav = document.querySelector('.header-nav');
+
+    if (mobileBtn && headerNav) {
+        mobileBtn.addEventListener('click', function() {
+            var expanded = mobileBtn.getAttribute('aria-expanded') === 'true';
+            mobileBtn.setAttribute('aria-expanded', !expanded);
+            headerNav.classList.toggle('mobile-open');
+            document.body.style.overflow = expanded ? '' : 'hidden';
+        });
+
+        // Close on nav link click
+        headerNav.querySelectorAll('a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                headerNav.classList.remove('mobile-open');
+                mobileBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            });
+        });
+    }
+
+})();
+</script>
+</body>
+</html>
